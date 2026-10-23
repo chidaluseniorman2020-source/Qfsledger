@@ -1,210 +1,301 @@
-<!doctype html><n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#fff"><title>QFS Ledger — Your Digital Assets</title><style>
-:root{--b:#0758e8;--n:#10284c;--m:#617695;--l:#dce7f5;--p:#f4f8ff}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,system-ui,sans-serif;color:var(--n)}a{color:inherit;text-decoration:none}header{position:sticky;top:0;background:#fffffff2;border-bottom:1px solid var(--l);z-index:5}.nav{max-width:1150px;margin:auto;padding:12px 20px;display:flex;align-items:center;gap:20px}.brand{display:flex;align-items:center;gap:9px;font-size:24px;font-weight:800;white-space:nowrap}.logo{width:40px;height:40px;border:3px solid var(--b);border-radius:50%;display:grid;place-items:center;color:var(--b);font-size:20px}.links{display:flex;gap:17px;margin-left:auto;font-size:13px}.actions{display:flex;gap:8px}.btn{display:inline-block;border-radius:9px;padding:12px 18px;border:1px solid var(--b);font-size:14px;font-weight:bold}.primary{background:var(--b);color:white}.outline{color:var(--b)}.menu{display:none;margin-left:auto;padding:8px;background:white;border:1px solid var(--l);border-radius:8px;color:var(--b)}.hero{background:radial-gradient(ellipse at 75% 45%,#dfebff,#f7faff 48%,white 80%);border-bottom:1px solid var(--l)}.hero-in{max-width:1150px;margin:auto;padding:55px 25px;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}.eyebrow{font-size:12px;font-weight:bold;letter-spacing:1px;color:#8295b1;text-transform:uppercase}.hero h1{font-size:clamp(42px,5vw,62px);line-height:1.04;letter-spacing:-2px;margin:15px 0}.blue{color:var(--b)}p{line-height:1.65;color:#536a8a}.hero p{font-size:17px;max-width:500px}.row{display:flex;gap:12px;flex-wrap:wrap;margin:25px 0}.trust{display:flex;gap:17px;flex-wrap:wrap;font-size:12px;color:#526783}.trust span{background:#e6f0ff;color:var(--b);padding:8px;border-radius:50%;margin-right:5px}.visual{min-height:370px;display:flex;justify-content:center;align-items:center;position:relative}.phone{z-index:2;width:250px;border:7px solid #172b45;border-radius:34px;background:white;padding:17px 13px;box-shadow:0 20px 40px #173a6924}.ptop{font-weight:bold;font-size:13px;margin-bottom:18px}.balance-label{font-size:11px;color:#7185a0}.balance{font-size:25px;font-weight:bold;margin:5px 0}.green{color:#08a879;font-size:11px}.chart{height:55px;margin:12px 0}.chart svg{width:100%;height:100%}.quick{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;margin-bottom:15px}.quick button{border:0;background:white;color:#536a8a;font-size:10px}.quick b{display:block;background:#e7f0ff;color:var(--b);border-radius:50%;padding:9px;margin:0 auto 5px;width:32px}.assets-head{font-weight:bold;font-size:12px;display:flex;justify-content:space-between}.asset{display:flex;align-items:center;gap:8px;padding:9px 0;border-top:1px solid #edf2f9;font-size:11px}.coin{width:26px;height:26px;background:#e7f0ff;border-radius:50%;display:grid;place-items:center;color:var(--b);font-weight:bold}.asset-name{flex:1}.asset small{display:block;color:#8494aa;margin-top:3px}.amount{text-align:right}.card{position:absolute;right:0;top:75px;width:155px;height:215px;border-radius:17px;background:linear-gradient(145deg,#17417d,#091c3c);color:white;transform:rotate(8deg);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-shadow:0 15px 30px #173a6924}.card .logo{width:52px;height:52px;color:#dceaff;border-color:#dceaff}.card strong{margin:12px}.card small{font-size:9px;line-height:1.5}.market{display:flex;gap:0;overflow:auto;align-items:center;max-width:1150px;margin:auto;padding:17px 20px}.market-title{font-weight:bold;white-space:nowrap;padding-right:20px}.ticker{border-left:1px solid var(--l);min-width:135px;padding:0 16px;display:grid;grid-template-columns:28px 1fr;column-gap:8px}.ticker .coin{grid-row:span 3}.ticker small{font-size:10px;color:#7185a0}.ticker strong{font-size:12px}.ticker em{font-size:10px;color:#08a879;font-style:normal}.section{max-width:1150px;margin:auto;padding:55px 25px}.features{display:grid;grid-template-columns:.8fr 1.5fr;gap:45px;align-items:center}.section h2{font-size:32px;line-height:1.15;margin:12px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.feature{border:1px solid var(--l);border-radius:12px;padding:17px;min-height:142px}.icon{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#e7f0ff;color:var(--b);font-weight:bold;margin-bottom:10px}.feature h3,.security h3{font-size:14px;margin:0 0 7px}.feature p,.security p{font-size:12px;margin:0}.security{background:linear-gradient(110deg,#f0f6ff,#fff);border-top:1px solid var(--l);border-bottom:1px solid var(--l)}.security-in{max-width:1150px;margin:auto;padding:48px 25px;display:grid;grid-template-columns:1fr 1.3fr;gap:50px}.secgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.secitem{display:flex;gap:12px}.cta{max-width:1100px;margin:40px auto;padding:28px;border-radius:15px;background:#102e60;color:white;display:flex;align-items:center;justify-content:space-between;gap:20px}.cta p{color:#d0def4;margin:0}.cta h2{margin:0 0 8px}.cta .btn{background:white;color:var(--b)}footer{background:#f7faff;border-top:1px solid var(--l);padding:35px 25px 16px}.foot{max-width:1100px;margin:auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:25px}.foot h4{font-size:13px}.foot a{display:block;color:#637895;font-size:12px;margin:10px 0}.foot p{font-size:12px}.copy{max-width:1100px;margin:20px auto 0;padding-top:14px;border-top:1px solid var(--l);font-size:11px;color:#7a8da8;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.support-float{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:20;border-radius:999px;padding:15px 18px;box-shadow:0 8px 24px #10284c30;min-height:0;display:flex;align-items:center;justify-content:center;writing-mode:horizontal-tb;white-space:nowrap;font-size:14px;line-height:1.2}.notice{display:none;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#10284c;color:white;padding:12px 16px;border-radius:9px;z-index:10;font-size:13px;max-width:90%;text-align:center}
-@media(max-width:950px){.links{gap:10px}.links a{font-size:11px}.brand{font-size:21px}.card{right:-5px;width:125px}}@media(max-width:740px){.nav{flex-wrap:wrap;padding:10px 15px}.menu{display:block}.links{display:none;order:3;width:100%;flex-direction:column;gap:0;margin:0}.links.open{display:flex}.links a{padding:11px 4px;border-top:1px solid #edf2f8;font-size:13px}.actions{display:none}.hero-in{grid-template-columns:1fr;padding:38px 20px 28px}.hero h1{font-size:45px}.hero p{font-size:15px}.visual{min-height:345px}.phone{width:235px}.card{right:0;width:115px;height:180px}.market{padding:14px}.section{padding:40px 20px}.features,.security-in{grid-template-columns:1fr;gap:25px}.grid{grid-template-columns:repeat(2,1fr)}.security-in{padding:40px 20px}.cta{margin:25px 15px;padding:23px;flex-direction:column;align-items:flex-start}.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:1/-1}}@media(max-width:740px){.support-float{right:10px;padding:13px 16px;font-size:13px}}@media(max-width:390px){.hero h1{font-size:39px}.card{right:-7px;width:100px}.phone{margin-left:-14px}.grid,.secgrid{grid-template-columns:1fr}}
-
-/* Expanded long-form landing page layout */
-.hero-inner{min-height:620px;padding-top:86px;padding-bottom:78px}
-.visual{min-height:470px}
-.market-inner{padding-top:23px;padding-bottom:23px}
-.section{padding-top:88px;padding-bottom:88px}
-.feature-card{min-height:176px;padding:23px 20px}
-.feature-card p{font-size:13px;line-height:1.65}
-.security-inner{padding-top:82px;padding-bottom:82px}
-.long-section{max-width:1200px;margin:auto;padding:86px 28px}
-.long-heading{max-width:670px;margin:0 auto 38px;text-align:center}
-.long-heading p{color:#5a7090;line-height:1.7;font-size:15px}
-.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.step-card,.info-card{border:1px solid var(--line);border-radius:15px;padding:26px;background:#fff;box-shadow:0 8px 26px #173a6908}
-.step-number{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#e8f1ff;color:var(--blue);font-weight:850;margin-bottom:17px}
-.step-card h3,.info-card h3{margin:0 0 10px;font-size:17px}.step-card p,.info-card p{margin:0;color:#617695;font-size:13px;line-height:1.7}
-.asset-explainer{background:#f6f9ff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.asset-showcase{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
-.asset-panel{background:white;border:1px solid var(--line);border-radius:16px;padding:26px}
-.asset-row{display:flex;align-items:center;gap:12px;border-bottom:1px solid #edf2f9;padding:15px 0}.asset-row:last-child{border-bottom:0}.asset-row .coin{width:38px;height:38px}.asset-row strong{font-size:14px}.asset-row small{display:block;color:#7b8ea8;font-size:11px;margin-top:4px}.asset-tag{margin-left:auto;font-size:11px;color:#6c82a0;background:#f2f6fc;padding:6px 8px;border-radius:7px}
-.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.faq-list{max-width:850px;margin:auto}.faq-list details{padding:19px 0;border-bottom:1px solid var(--line)}.faq-list summary{font-weight:750;cursor:pointer;font-size:15px}.faq-list details p{font-size:13px;color:#617695;line-height:1.7;margin-bottom:0}
-.soft-blue{background:linear-gradient(180deg,#f6f9ff,#fff);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-@media(max-width:760px){.hero-inner{min-height:auto;padding-top:48px;padding-bottom:44px}.visual{min-height:380px}.section,.long-section{padding:52px 20px}.feature-card{min-height:150px;padding:16px}.steps-grid,.asset-showcase{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr 1fr}.long-heading{margin-bottom:25px}.security-inner{padding-top:48px;padding-bottom:48px}}
-@media(max-width:420px){.info-grid{grid-template-columns:1fr}.steps-grid{gap:12px}}
-
-
-.auth-overlay{display:none;position:fixed;inset:0;background:#071b35b8;z-index:50;padding:18px;align-items:center;justify-content:center}
-.auth-overlay.open{display:flex}.auth-box{width:min(100%,420px);background:white;border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:0 25px 80px #0003;position:relative}
-.auth-box h2{margin:4px 0 8px;font-size:26px}.auth-box p{font-size:13px;line-height:1.6;color:var(--muted)}
-.auth-box label{display:block;font-size:12px;font-weight:700;margin:14px 0 6px}.auth-box input{width:100%;padding:12px;border:1px solid #ccd9eb;border-radius:8px;font:inherit}
-.auth-box .full{width:100%;margin-top:16px}.auth-close{position:absolute;right:16px;top:13px;border:0;background:#eef4ff;border-radius:50%;width:32px;height:32px;font-size:19px;color:var(--navy)}
-.auth-switch{border:0;background:transparent;color:var(--blue);font-weight:700;padding:12px 0 0}.auth-warning{background:#fff6df;border:1px solid #f1d99a;padding:10px;border-radius:8px;font-size:11px;color:#735a19;line-height:1.5}
-@media(max-width:760px){.nav-actions{display:flex;width:100%;order:4}.nav-actions .btn{flex:1}.links{order:3}}
-
-
-.auth-overlay{display:none;position:fixed;inset:0;background:#071b35bb;z-index:50;padding:18px;align-items:center;justify-content:center}
-.auth-overlay.open{display:flex}.auth-box{width:min(100%,420px);background:white;border:1px solid var(--l);border-radius:18px;padding:25px;box-shadow:0 25px 80px #0003;position:relative}
-.auth-box h2{margin:16px 0 8px;font-size:26px}.auth-box p{font-size:13px;line-height:1.5}
-.auth-box label{display:block;font-size:12px;font-weight:bold;margin:13px 0 6px}.auth-box input{width:100%;padding:12px;border:1px solid #ccd9eb;border-radius:8px;font:inherit}
-.auth-box .full{width:100%;margin-top:15px}.auth-close{position:absolute;right:14px;top:12px;border:0;background:#eef4ff;border-radius:50%;width:32px;height:32px;font-size:20px;color:var(--n)}
-.auth-switch{border:0;background:transparent;color:var(--b);font-weight:bold;padding:13px 0 0}.auth-warning{background:#fff6df;border:1px solid #f1d99a;padding:10px;border-radius:8px;font-size:11px;color:#735a19;line-height:1.5}
-.gated-link{cursor:pointer}
-@media(max-width:760px){.nav{flex-wrap:wrap}.actions{display:flex;order:4;width:100%}.actions .btn{flex:1}.links{order:3;width:100%;display:none;flex-direction:column}.links.open{display:flex}.links a{padding:10px 2px;border-top:1px solid var(--l)}}
-</style></head><body>
-<header><nav class="nav"><a class="brand" href="#home"><span class="logo">◔</span>QFS Ledger</a><button class="menu" id="menu">☰ Menu</button><div class="links" id="links"><a href="#home">Home</a><a href="#assets">Assets</a><a class="gated-link" href="#account" data-gated="Send">Send</a><a class="gated-link" href="#account" data-gated="Receive">Receive</a><a class="gated-link" href="#account" data-gated="Buy Crypto">Buy Crypto</a><a class="gated-link" href="#account" data-gated="Swap">Swap</a><a class="gated-link" href="#account" data-gated="Trade">Trade</a><a class="gated-link" href="#account" data-gated="Transactions">Transactions</a></div><div class="actions"><button class="btn outline" type="button" data-auth="login">Log in</button><button class="btn primary" type="button" data-auth="signup">Create account</button></div></nav></header>
-<main><section class="hero" id="home"><div class="hero-in"><div><div class="eyebrow">Your digital assets. Our priority.</div><h1>Welcome to<br><span class="blue">QFS Ledger</span></h1><p>A secure, simple and powerful way to manage your cryptocurrency. Buy, sell, send, receive and swap digital assets — all in one place.</p><div class="row"><a class="btn primary" href="#features">Get Started →</a><a class="btn outline" href="#why">Learn More</a></div><div class="trust"><div><span>♢</span>Secure &amp; Reliable</div><div><span>ϟ</span>Fast Transactions</div><div><span>◎</span>Global Access</div><div><span>↻</span>Support</div></div></div><div class="visual"><div class="card"><div class="logo">◔</div><strong>QFS Ledger</strong><small>YOUR DIGITAL ASSETS.<br>OUR PRIORITY.</small></div><div class="phone"><div class="ptop"><span class="logo" style="display:inline-grid;width:23px;height:23px;font-size:12px;vertical-align:middle">◔</span> QFS Ledger</div><div class="balance-label">Total Balance (demo)</div><div class="balance">$2,458.32</div><div class="green">▲ 12.4% (24h) — sample data</div><div class="chart"><svg viewBox="0 0 220 60" preserveAspectRatio="none"><polyline points="0,49 20,40 35,44 55,30 72,36 92,24 110,29 127,18 145,24 165,10 182,17 199,4 220,8" fill="none" stroke="#1768ef" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="quick"><button data-demo="Send"><b>↗</b>Send</button><button data-demo="Receive"><b>↓</b>Receive</button><button data-demo="Buy crypto"><b>▣</b>Buy</button><button data-demo="Swap"><b>⇄</b>Swap</button></div><div class="assets-head" id="assets">My Assets <a href="#features" class="blue">View all</a></div><div class="asset"><span class="coin">◎</span><span class="asset-name">XLM<small>Stellar Lumens</small></span><span class="amount">1,250.00<small>Demo balance</small></span></div><div class="asset"><span class="coin">₿</span><span class="asset-name">BTC<small>Bitcoin</small></span><span class="amount">0.0324<small>Demo balance</small></span></div><div class="asset"><span class="coin">＄</span><span class="asset-name">USDC<small>USD Coin</small></span><span class="amount">480.00<small>Demo balance</small></span></div><div class="asset"><span class="coin">◆</span><span class="asset-name">ETH<small>Ethereum</small></span><span class="amount">0.12<small>Demo balance</small></span></div></div></div></div></section>
-<section class="market"><div class="market-title">⊕ &nbsp; Sample Crypto Prices</div><div class="ticker"><span class="coin">◎</span><small>XLM</small><strong>$0.2563</strong><em>Sample</em></div><div class="ticker"><span class="coin">₿</span><small>BTC</small><strong>$63,482.12</strong><em>Sample</em></div><div class="ticker"><span class="coin">◆</span><small>ETH</small><strong>$3,246.17</strong><em>Sample</em></div><div class="ticker"><span class="coin">＄</span><small>USDC</small><strong>$1.00</strong><em>Sample</em></div><div class="ticker"><span class="coin">✕</span><small>XRP</small><strong>$0.4867</strong><em>Sample</em></div></section>
-<section class="section features" id="features"><div><div class="eyebrow">The QFS Ledger wallet</div><h2>Everything You Need<br>in <span class="blue">One Place</span></h2><p>QFS Ledger gives you a clear place to explore digital asset tools with a simple, intuitive interface. Whether you're new to crypto or an experienced user, discover the features in one place.</p><a class="btn primary" href="#account">Explore All Features →</a></div><div class="grid"><a class="feature" href="#account" data-demo="Buy Crypto"><div class="icon">▣</div><h3>Buy Crypto</h3><p>Explore ways to purchase supported digital assets.</p></a><a class="feature" href="#account" data-demo="Send and Receive"><div class="icon">⇄</div><h3>Send &amp; Receive</h3><p>Learn how digital asset transfers work.</p></a><a class="feature" href="#account" data-demo="Swap"><div class="icon">⇆</div><h3>Swap</h3><p>Explore exchanging between different assets.</p></a><a class="feature" href="#account" data-demo="Trade"><div class="icon">↗</div><h3>Trade</h3><p>Learn about trading tools and market data.</p></a><a class="feature" href="#assets"><div class="icon">▱</div><h3>Portfolio</h3><p>See an example portfolio layout.</p></a><a class="feature" id="transactions" href="#account" data-demo="Transactions"><div class="icon">▤</div><h3>Transactions</h3><p>See where transaction history can appear.</p></a></div></section>
-<section class="security" id="why"><div class="security-in"><div><div class="eyebrow">Why choose QFS Ledger</div><h2>Built for Security,<br>Designed for You</h2><p>Security should come first when managing digital assets. A real wallet needs properly implemented protection, secure key handling, and verified transaction flows.</p><a class="btn primary" href="#account">Get Started →</a></div><div class="secgrid"><div class="secitem"><div class="icon">✓</div><div><h3>Security First</h3><p>Security features must be implemented and verified before handling real assets.</p></div></div><div class="secitem"><div class="icon">♙</div><div><h3>Your Control</h3><p>Clear account and asset information, with transparent controls.</p></div></div><div class="secitem"><div class="icon">◎</div><div><h3>Transparent Platform</h3><p>Clearly labelled information and sample balances.</p></div></div><div class="secitem"><div class="icon">♧</div><div><h3>Help &amp; Support</h3><p>Support information can be added as the service is developed.</p></div></div></div></div></section>
-
-<section class="long-section soft-blue" id="how-it-works">
-  <div class="long-heading"><div class="eyebrow">A simple experience</div><h2>Getting started with <span>QFS Ledger</span></h2><p>Explore the main areas of a digital asset wallet through a clear, guided interface. These steps explain the intended experience; account setup and transactions are not active on this prototype.</p></div>
-  <div class="steps-grid">
-    <article class="step-card"><div class="step-number">01</div><h3>Explore your dashboard</h3><p>See where a wallet balance, supported assets and recent activity could be organized in one place.</p></article>
-    <article class="step-card"><div class="step-number">02</div><h3>Review asset information</h3><p>Learn how asset names, network details and balances can be presented before making any decision.</p></article>
-    <article class="step-card"><div class="step-number">03</div><h3>Use verified wallet tools</h3><p>Real sending, receiving, buying and swapping must be connected to secure services before launch.</p></article>
-  </div>
-</section>
-<section class="long-section" id="portfolio">
-  <div class="long-heading"><div class="eyebrow">Portfolio overview</div><h2>Your digital assets, <span>at a glance</span></h2><p>A spacious portfolio section gives visitors more room to browse assets and understand the wallet layout on desktop or mobile.</p></div>
-  <div class="asset-showcase">
-    <div class="asset-panel"><div class="assets-head"><span>Example asset list</span><span style="color:#8194b0;font-weight:500">Demo only</span></div>
-      <div class="asset-row"><span class="coin">◎</span><span><strong>Stellar (XLM)</strong><small>Example asset entry</small></span><span class="asset-tag">Preview</span></div>
-      <div class="asset-row"><span class="coin" style="color:#e9981b">₿</span><span><strong>Bitcoin (BTC)</strong><small>Example asset entry</small></span><span class="asset-tag">Preview</span></div>
-      <div class="asset-row"><span class="coin">＄</span><span><strong>USD Coin (USDC)</strong><small>Example asset entry</small></span><span class="asset-tag">Preview</span></div>
-      <div class="asset-row"><span class="coin" style="color:#6a65db">◆</span><span><strong>Ethereum (ETH)</strong><small>Example asset entry</small></span><span class="asset-tag">Preview</span></div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff">
+  <title>QFS Ledger — Your Digital Assets</title>
+  <style>
+    :root{--blue:#0758e8;--navy:#10284c;--muted:#617695;--line:#dce7f5;--pale:#f4f8ff}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Arial,system-ui,sans-serif;color:var(--navy)}
+    a{color:inherit;text-decoration:none}
+    button,input{font:inherit}
+    header{position:sticky;top:0;background:#fffffff2;border-bottom:1px solid var(--line);z-index:5}
+    .nav{max-width:1150px;margin:auto;padding:12px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:9px;font-size:23px;font-weight:800;white-space:nowrap}
+    .logo{width:40px;height:40px;border:3px solid var(--blue);border-radius:50%;display:grid;place-items:center;color:var(--blue);font-size:20px}
+    .links{display:flex;gap:16px;margin-left:auto;font-size:13px}
+    .actions{display:flex;gap:8px}
+    .btn{display:inline-block;border-radius:9px;padding:12px 17px;border:1px solid var(--blue);font-size:14px;font-weight:bold;cursor:pointer}
+    .primary{background:var(--blue);color:white}
+    .outline{color:var(--blue);background:white}
+    .menu{display:none;margin-left:auto;padding:8px;background:white;border:1px solid var(--line);border-radius:8px;color:var(--blue)}
+    .hero{background:radial-gradient(ellipse at 75% 45%,#dfebff,#f7faff 48%,white 80%);border-bottom:1px solid var(--line)}
+    .hero-in{max-width:1150px;margin:auto;padding:55px 25px;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+    .eyebrow{font-size:12px;font-weight:bold;letter-spacing:1px;color:#8295b1;text-transform:uppercase}
+    h1{font-size:clamp(42px,5vw,62px);line-height:1.04;letter-spacing:-2px;margin:15px 0}
+    .blue{color:var(--blue)}
+    p{line-height:1.65;color:#536a8a}
+    .hero p{font-size:17px;max-width:500px}
+    .row{display:flex;gap:12px;flex-wrap:wrap;margin:25px 0}
+    .trust{display:flex;gap:17px;flex-wrap:wrap;font-size:12px;color:#526783}
+    .trust span{background:#e6f0ff;color:var(--blue);padding:8px;border-radius:50%;margin-right:5px}
+    .visual{min-height:370px;display:flex;justify-content:center;align-items:center;position:relative}
+    .phone{z-index:2;width:250px;border:7px solid #172b45;border-radius:34px;background:white;padding:17px 13px;box-shadow:0 20px 40px #173a6924}
+    .ptop{font-weight:bold;font-size:13px;margin-bottom:18px}
+    .balance-label{font-size:11px;color:#7185a0}
+    .balance{font-size:25px;font-weight:bold;margin:5px 0}
+    .green{color:#08a879;font-size:11px}
+    .chart{height:55px;margin:12px 0}
+    .chart svg{width:100%;height:100%}
+    .quick{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;margin-bottom:15px}
+    .quick button{border:0;background:white;color:#536a8a;font-size:10px;cursor:pointer}
+    .quick b{display:block;background:#e7f0ff;color:var(--blue);border-radius:50%;padding:9px;margin:0 auto 5px;width:32px}
+    .assets-head{font-weight:bold;font-size:12px;display:flex;justify-content:space-between}
+    .asset{display:flex;align-items:center;gap:8px;padding:9px 0;border-top:1px solid #edf2f9;font-size:11px}
+    .coin{width:26px;height:26px;background:#e7f0ff;border-radius:50%;display:grid;place-items:center;color:var(--blue);font-weight:bold}
+    .asset-name{flex:1}.asset small{display:block;color:#8494aa;margin-top:3px}
+    .amount{text-align:right}
+    .card{position:absolute;right:0;top:75px;width:155px;height:215px;border-radius:17px;background:linear-gradient(145deg,#17417d,#091c3c);color:white;transform:rotate(8deg);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-shadow:0 15px 30px #173a6924}
+    .card .logo{width:52px;height:52px;color:#dceaff;border-color:#dceaff}
+    .card strong{margin:12px}.card small{font-size:9px;line-height:1.5}
+    .market{display:flex;gap:0;overflow:auto;align-items:center;max-width:1150px;margin:auto;padding:17px 20px}
+    .market-title{font-weight:bold;white-space:nowrap;padding-right:20px}
+    .ticker{border-left:1px solid var(--line);min-width:135px;padding:0 16px;display:grid;grid-template-columns:28px 1fr;column-gap:8px}
+    .ticker .coin{grid-row:span 3}.ticker small{font-size:10px;color:#7185a0}.ticker strong{font-size:12px}.ticker em{font-size:10px;color:#08a879;font-style:normal}
+    .section{max-width:1150px;margin:auto;padding:65px 25px}
+    .features{display:grid;grid-template-columns:.8fr 1.5fr;gap:45px;align-items:center}
+    .section h2{font-size:32px;line-height:1.15;margin:12px 0}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+    .feature{border:1px solid var(--line);border-radius:12px;padding:17px;min-height:142px;cursor:pointer}
+    .icon{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#e7f0ff;color:var(--blue);font-weight:bold;margin-bottom:10px}
+    .feature h3{font-size:14px;margin:0 0 7px}.feature p{font-size:12px;margin:0}
+    .security{background:linear-gradient(110deg,#f0f6ff,#fff);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .security-in{max-width:1150px;margin:auto;padding:48px 25px;display:grid;grid-template-columns:1fr 1.3fr;gap:50px}
+    .secgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .secitem{display:flex;gap:12px}.secitem h3{font-size:14px;margin:0 0 7px}.secitem p{font-size:12px;margin:0}
+    .long-section{max-width:1150px;margin:auto;padding:65px 25px}
+    .long-heading{max-width:700px;margin:0 auto 30px;text-align:center}
+    .steps-grid,.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .step-card,.info-card{border:1px solid var(--line);border-radius:15px;padding:23px;background:white}
+    .step-card h3,.info-card h3{margin:0 0 10px;font-size:16px}.step-card p,.info-card p{margin:0;font-size:13px}
+    .soft-blue{background:#f6f9ff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .faq-list{max-width:850px;margin:auto}.faq-list details{padding:19px 0;border-bottom:1px solid var(--line)}
+    .faq-list summary{font-weight:750;cursor:pointer;font-size:15px}.faq-list details p{font-size:13px}
+    .cta{max-width:1100px;margin:35px auto;padding:28px;border-radius:15px;background:#102e60;color:white;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .cta p{color:#d0def4;margin:0}.cta h2{margin:0 0 8px}.cta .btn{background:white;color:var(--blue)}
+    footer{background:#f7faff;border-top:1px solid var(--line);padding:35px 25px 16px}
+    .foot{max-width:1100px;margin:auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:25px}
+    .foot h4{font-size:13px}.foot a{display:block;color:#637895;font-size:12px;margin:10px 0}.foot p{font-size:12px}
+    .copy{max-width:1100px;margin:20px auto 0;padding-top:14px;border-top:1px solid var(--line);font-size:11px;color:#7a8da8;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .support-float{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:20;border-radius:999px;padding:14px 16px;box-shadow:0 8px 24px #10284c30;white-space:nowrap}
+    .notice{display:none;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#10284c;color:white;padding:12px 16px;border-radius:9px;z-index:100;font-size:13px;max-width:90%;text-align:center}
+    .auth-overlay{display:none;position:fixed;inset:0;background:#071b35bb;z-index:50;padding:18px;align-items:center;justify-content:center}
+    .auth-overlay.open{display:flex}
+    .auth-box{width:min(100%,420px);max-height:95vh;overflow:auto;background:white;border:1px solid var(--line);border-radius:18px;padding:25px;box-shadow:0 25px 80px #0003;position:relative}
+    .auth-box h2{margin:16px 0 8px;font-size:26px}.auth-box p{font-size:13px;line-height:1.5}
+    .auth-box label{display:block;font-size:12px;font-weight:bold;margin:13px 0 6px}
+    .auth-box input{width:100%;padding:12px;border:1px solid #ccd9eb;border-radius:8px;font:inherit}
+    .auth-box .full{width:100%;margin-top:15px}.auth-close{position:absolute;right:14px;top:12px;border:0;background:#eef4ff;border-radius:50%;width:32px;height:32px;font-size:20px;color:var(--navy);cursor:pointer}
+    .auth-switch{border:0;background:transparent;color:var(--blue);font-weight:bold;padding:13px 0 0;cursor:pointer}
+    .auth-warning{background:#fff6df;border:1px solid #f1d99a;padding:10px;border-radius:8px;font-size:11px;color:#735a19;line-height:1.5;margin-top:12px}
+    .btn:disabled{opacity:.65;cursor:wait}
+    @media(max-width:950px){.links{gap:10px}.links a{font-size:11px}.brand{font-size:21px}.card{right:-5px;width:125px}}
+    @media(max-width:760px){.nav{padding:10px 15px}.menu{display:block}.links{display:none;order:3;width:100%;flex-direction:column;gap:0;margin:0}.links.open{display:flex}.links a{padding:11px 4px;border-top:1px solid #edf2f8;font-size:13px}.actions{display:flex;order:4;width:100%}.actions .btn{flex:1}.hero-in{grid-template-columns:1fr;padding:38px 20px 28px}.hero h1{font-size:45px}.hero p{font-size:15px}.visual{min-height:345px}.phone{width:235px}.card{right:0;width:115px;height:180px}.market{padding:14px}.section,.long-section{padding:45px 20px}.features,.security-in{grid-template-columns:1fr;gap:25px}.grid{grid-template-columns:repeat(2,1fr)}.security-in{padding:40px 20px}.steps-grid,.info-grid{grid-template-columns:1fr 1fr}.cta{margin:25px 15px;padding:23px;flex-direction:column;align-items:flex-start}.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:1/-1}.support-float{right:10px;padding:12px;font-size:12px}}
+    @media(max-width:420px){.hero h1{font-size:39px}.card{right:-7px;width:100px}.phone{margin-left:-14px}.grid,.secgrid,.steps-grid,.info-grid{grid-template-columns:1fr}.foot{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header><nav class="nav">
+  <a class="brand" href="#home"><span class="logo">◔</span>QFS Ledger</a>
+  <button class="menu" id="menu" type="button" aria-expanded="false">☰ Menu</button>
+  <div class="links" id="links"><a href="#home">Home</a><a href="#assets">Assets</a><a href="#features">Features</a><a href="#why">Security</a><a href="#faq">FAQ</a></div>
+  <div class="actions"><button class="btn outline" type="button" data-auth="login">Log in</button><button class="btn primary" type="button" data-auth="signup">Create account</button></div>
+</nav></header>
+<main>
+  <section class="hero" id="home"><div class="hero-in">
+    <div><div class="eyebrow">Your digital assets. Our priority.</div><h1>Welcome to<br><span class="blue">QFS Ledger</span></h1>
+      <p>A clean, simple interface concept for exploring digital asset tools. This website is a prototype, not a functioning cryptocurrency wallet.</p>
+      <div class="row"><button class="btn primary" type="button" data-auth="signup">Get Started →</button><a class="btn outline" href="#why">Learn More</a></div>
+      <div class="trust"><div><span>♢</span>Prototype preview</div><div><span>ϟ</span>Mobile friendly</div><div><span>◎</span>Transparent demo</div></div>
     </div>
-    <div class="asset-panel" style="background:linear-gradient(145deg,#f5f9ff,#eaf2ff)"><div class="eyebrow">Designed for clarity</div><h2 style="font-size:29px;margin-top:16px">Everything organized in one view</h2><p>Use a clean visual hierarchy to separate asset names, balances and actions. Values on this sample page are illustrative and are not live market data or a connected wallet balance.</p><div style="height:130px;margin-top:24px;border-radius:12px;background:linear-gradient(180deg,#dbe9ff,#f9fbff);display:flex;align-items:end;padding:15px;gap:9px;overflow:hidden"><span style="height:28%;flex:1;background:#a8c9ff;border-radius:5px 5px 0 0"></span><span style="height:45%;flex:1;background:#8db8ff;border-radius:5px 5px 0 0"></span><span style="height:38%;flex:1;background:#76a8ff;border-radius:5px 5px 0 0"></span><span style="height:60%;flex:1;background:#5e96ff;border-radius:5px 5px 0 0"></span><span style="height:53%;flex:1;background:#4284fb;border-radius:5px 5px 0 0"></span><span style="height:82%;flex:1;background:#1768ef;border-radius:5px 5px 0 0"></span><span style="height:70%;flex:1;background:#0758e8;border-radius:5px 5px 0 0"></span></div></div>
-  </div>
-</section>
-<section class="long-section soft-blue" id="benefits">
-  <div class="long-heading"><div class="eyebrow">Built around your workflow</div><h2>A clearer way to explore <span>crypto tools</span></h2><p>Each area of the QFS Ledger concept is designed to be easy to find, with a consistent look and comfortable spacing.</p></div>
-  <div class="info-grid">
-    <article class="info-card"><div class="feature-icon">⌕</div><h3>Easy navigation</h3><p>Find the main sections quickly on a phone, tablet or desktop.</p></article>
-    <article class="info-card"><div class="feature-icon">▤</div><h3>Clear information</h3><p>Separate asset details and transaction information into readable panels.</p></article>
-    <article class="info-card"><div class="feature-icon">↔</div><h3>Flexible layout</h3><p>Cards and sections adapt to different screen sizes.</p></article>
-    <article class="info-card"><div class="feature-icon">✓</div><h3>Transparent preview</h3><p>Demo information is labelled so it is not mistaken for live account data.</p></article>
-  </div>
-</section>
-<section class="long-section" id="faq">
-  <div class="long-heading"><div class="eyebrow">Need to know</div><h2>Frequently asked <span>questions</span></h2><p>Helpful notes about this QFS Ledger homepage prototype.</p></div>
-  <div class="faq-list">
-    <details><summary>Is this a live cryptocurrency wallet?</summary><p>No. This is a front-end website prototype. It does not create accounts, hold private keys, connect to a blockchain or process cryptocurrency transactions.</p></details>
-    <details><summary>Are the balances and market prices real?</summary><p>No. All balances, chart values and prices shown in this design are sample content for layout demonstration only.</p></details>
-    <details><summary>Can visitors send or receive cryptocurrency now?</summary><p>No. Those controls are previews only. Real wallet functions require audited integrations, secure key management, appropriate disclosures and testing before launch.</p></details>
-    <details><summary>Will this page work on a phone?</summary><p>Yes. The page is designed to adapt to smaller screens, with a mobile navigation menu and stacked content sections.</p></details>
-  </div>
-</section>
-
-
-<section class="section" id="connect-wallet" style="padding-top:24px;padding-bottom:24px;">
-  <a class="btn primary" href="#connect-wallet" id="linkWalletBtn">Link Your Wallet&nbsp; →</a>
-</section>
-
-<div class="security-quote" style="max-width:1144px;margin:0 auto 42px;padding:0 28px;">
-  <blockquote style="margin:0;padding:22px 25px;border-left:4px solid var(--blue);background:#fff;border-radius:0 12px 12px 0;font-size:clamp(18px,2.5vw,25px);font-weight:750;line-height:1.4;color:var(--ink);">
-    “Your assets deserve protection at every layer. Security is our first priority — always.”
-    <footer style="background:none;border:0;padding:10px 0 0;font-size:12px;color:var(--muted);">— QFS Ledger security principle</footer>
-  </blockquote>
-</div>
-<section class="cta" id="account"><div><h2>Explore the QFS Ledger experience</h2><p>This is a visual prototype. Accounts and transactions are not connected yet.</p></div><a class="btn" href="#features" data-demo="Get Started">Explore demo →</a></section></main>
-<footer><div class="foot"><div><a class="brand" href="#home"><span class="logo">◔</span>QFS Ledger</a><p>Your digital assets. Our priority. A clean interface concept for a digital asset platform.</p></div><div><h4>Product</h4><a href="#assets">Assets</a><a href="#features">Send &amp; Receive</a><a href="#features">Buy Crypto</a><a href="#features">Swap</a><a href="#transactions">Transactions</a></div><div><h4>Company</h4><a href="#why">About QFS Ledger</a><a href="#why">Security</a><a href="#why">Platform information</a></div><div><h4>Support</h4><p>Use the Send Message button on the right side of the page.</p></div></div><div class="copy"><span>© 2026 QFS Ledger. Prototype website.</span><span>Demo data only · No live wallet connection</span></div></footer><button class="btn primary support-float" type="button" id="sendSupportMessage" aria-label="Need help? Contact us">Need help? Contact us</button><div class="notice" id="notice"></div>
+    <div class="visual"><div class="card"><div class="logo">◔</div><strong>QFS Ledger</strong><small>PROTOTYPE PREVIEW<br>DEMO DATA ONLY</small></div>
+      <div class="phone"><div class="ptop"><span class="logo" style="display:inline-grid;width:23px;height:23px;font-size:12px;vertical-align:middle">◔</span> QFS Ledger</div>
+        <div class="balance-label">Example Balance (demo)</div><div class="balance">$2,458.32</div><div class="green">Sample data only</div>
+        <div class="chart"><svg viewBox="0 0 220 60" preserveAspectRatio="none"><polyline points="0,49 20,40 35,44 55,30 72,36 92,24 110,29 127,18 145,24 165,10 182,17 199,4 220,8" fill="none" stroke="#1768ef" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+        <div class="quick"><button type="button" data-demo="Send"><b>↗</b>Send</button><button type="button" data-demo="Receive"><b>↓</b>Receive</button><button type="button" data-demo="Buy crypto"><b>▣</b>Buy</button><button type="button" data-demo="Swap"><b>⇄</b>Swap</button></div>
+        <div class="assets-head" id="assets">Example assets <span class="blue">Demo</span></div>
+        <div class="asset"><span class="coin">◎</span><span class="asset-name">XLM<small>Stellar Lumens</small></span><span class="amount">1,250.00<small>Sample</small></span></div>
+        <div class="asset"><span class="coin">₿</span><span class="asset-name">BTC<small>Bitcoin</small></span><span class="amount">0.0324<small>Sample</small></span></div>
+        <div class="asset"><span class="coin">◆</span><span class="asset-name">ETH<small>Ethereum</small></span><span class="amount">0.12<small>Sample</small></span></div>
+      </div>
+    </div>
+  </div></section>
+  <section class="market"><div class="market-title">⊕ &nbsp; Sample Crypto Prices</div><div class="ticker"><span class="coin">◎</span><small>XLM</small><strong>$0.2563</strong><em>Sample</em></div><div class="ticker"><span class="coin">₿</span><small>BTC</small><strong>$63,482.12</strong><em>Sample</em></div><div class="ticker"><span class="coin">◆</span><small>ETH</small><strong>$3,246.17</strong><em>Sample</em></div><div class="ticker"><span class="coin">✕</span><small>XRP</small><strong>$0.4867</strong><em>Sample</em></div></section>
+  <section class="section features" id="features"><div><div class="eyebrow">The QFS Ledger concept</div><h2>Everything in<br><span class="blue">One Place</span></h2><p>Explore a sample layout for digital asset information. Real account and transaction functions require secure backend implementation and independent testing.</p><button class="btn primary" type="button" data-auth="signup">Create account</button></div>
+    <div class="grid"><div class="feature" data-demo="Buy Crypto"><div class="icon">▣</div><h3>Buy Crypto</h3><p>Preview where buying tools could appear.</p></div><div class="feature" data-demo="Send and Receive"><div class="icon">⇄</div><h3>Send &amp; Receive</h3><p>Explore a sample transfer interface.</p></div><div class="feature" data-demo="Swap"><div class="icon">⇆</div><h3>Swap</h3><p>Preview exchanging asset layouts.</p></div><div class="feature" data-demo="Trade"><div class="icon">↗</div><h3>Trade</h3><p>Learn about trading tool layouts.</p></div><div class="feature"><div class="icon">▱</div><h3>Portfolio</h3><p>See an example portfolio design.</p></div><div class="feature" data-demo="Transactions"><div class="icon">▤</div><h3>Transactions</h3><p>Preview where history could appear.</p></div></div>
+  </section>
+  <section class="security" id="why"><div class="security-in"><div><div class="eyebrow">Why security matters</div><h2>Designed with<br>transparency in mind</h2><p>A real wallet needs tested security, proper key handling and verified transaction flows before real assets should ever be used.</p></div><div class="secgrid"><div class="secitem"><div class="icon">✓</div><div><h3>Security first</h3><p>Security must be implemented and tested before launch.</p></div></div><div class="secitem"><div class="icon">◎</div><div><h3>Transparent preview</h3><p>Balances and prices shown here are illustrative.</p></div></div><div class="secitem"><div class="icon">♧</div><div><h3>Help &amp; support</h3><p>Support messaging is not connected yet.</p></div></div><div class="secitem"><div class="icon">▤</div><div><h3>Account access</h3><p>Registration uses Supabase Auth when configured.</p></div></div></div></div></section>
+  <section class="long-section soft-blue"><div class="long-heading"><div class="eyebrow">Getting started</div><h2>Explore the experience</h2><p>This website remains a prototype. Account registration is separate from any wallet or blockchain functionality.</p></div><div class="steps-grid"><article class="step-card"><h3>01. Explore</h3><p>Browse the sample dashboard and page sections.</p></article><article class="step-card"><h3>02. Register</h3><p>Test the account form with an email address you control and a unique password.</p></article><article class="step-card"><h3>03. Stay safe</h3><p>Never enter a wallet recovery phrase or private key on this prototype.</p></article></div></section>
+  <section class="long-section" id="faq"><div class="long-heading"><div class="eyebrow">Need to know</div><h2>Frequently asked questions</h2></div><div class="faq-list">
+    <details><summary>Is this a live cryptocurrency wallet?</summary><p>No. This is a front-end website prototype. It does not hold private keys, connect to a blockchain or process cryptocurrency transactions.</p></details>
+    <details><summary>Are the balances and prices real?</summary><p>No. All balances, chart values and prices shown are sample content only.</p></details>
+    <details><summary>What does account creation do?</summary><p>If Supabase Authentication is configured, it can create an authentication account. That does not create a crypto wallet or enable transactions.</p></details>
+  </div></section>
+  <section class="cta"><div><h2>Explore QFS Ledger</h2><p>Prototype website — demo data only; no live wallet connection.</p></div><button class="btn" type="button" data-auth="signup">Create account →</button></section>
+</main>
+<footer><div class="foot"><div><a class="brand" href="#home"><span class="logo">◔</span>QFS Ledger</a><p>A clean interface concept for a digital asset platform.</p></div><div><h4>Product</h4><a href="#assets">Assets</a><a href="#features">Features</a></div><div><h4>Company</h4><a href="#why">Security</a><a href="#faq">Platform information</a></div><div><h4>Support</h4><p>Support messaging is not connected yet.</p></div></div><div class="copy"><span>© 2026 QFS Ledger. Prototype website.</span><span>Demo data only · No live wallet connection</span></div></footer>
+<button class="btn primary support-float" type="button" id="sendSupportMessage">Need help? Contact us</button>
+<div class="notice" id="notice" role="status" aria-live="polite"></div>
 <div class="auth-overlay" id="authOverlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
-<div class="auth-box"><button class="auth-close" id="authClose" aria-label="Close">×</button>
-<a class="brand" href="#home"><span class="logo">◔</span>QFS Ledger</a>
-<h2 id="authTitle">Create your QFS Ledger account</h2><p>Registration and login are demonstration screens only.</p>
-<form id="authForm"><div id="nameField"><label for="authName">Full name</label><input id="authName" autocomplete="name" placeholder="Your name"></div>
-<label for="authEmail">Email address</label><input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com">
-<label for="authPassword">Password</label><input id="authPassword" type="password" autocomplete="current-password" required minlength="8" placeholder="At least 8 characters">
-<div class="auth-warning">Demo only: no secure server is connected. Do not enter a real password or sensitive information.</div>
-<button class="btn primary full" id="authSubmit" type="submit">Create demo account</button></form>
-<button class="auth-switch" id="authSwitch" type="button">Already have an account? Log in</button></div></div><script>
-const menu=document.getElementById('menu'),links=document.getElementById('links');
-menu.onclick=()=>{let open=links.classList.toggle('open');menu.setAttribute('aria-expanded',open);menu.textContent=open?'✕ Close':'☰ Menu'};
-links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('open'));
-let mode='signup', demoUnlocked=false, t;
-const overlay=document.getElementById('authOverlay'), title=document.getElementById('authTitle'), nameField=document.getElementById('nameField'), submit=document.getElementById('authSubmit'), switchBtn=document.getElementById('authSwitch');
-function openAuth(m){mode=m;title.textContent=m==='signup'?'Create your QFS Ledger account':'Log in to QFS Ledger';nameField.style.display=m==='signup'?'block':'none';submit.textContent=m==='signup'?'Create demo account':'Continue to demo';switchBtn.textContent=m==='signup'?'Already have an account? Log in':"Don't have an account? Create one";overlay.classList.add('open')}
-document.querySelectorAll('[data-auth]').forEach(b=>b.addEventListener('click',()=>openAuth(b.dataset.auth)));
-document.getElementById('authClose').onclick=()=>overlay.classList.remove('open');
-overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.classList.remove('open')});
-switchBtn.onclick=()=>openAuth(mode==='signup'?'login':'signup');
-function showNotice(msg){const n=document.getElementById('notice');n.textContent=msg;n.style.display='block';clearTimeout(t);t=setTimeout(()=>n.style.display='none',4500)}
-document.getElementById('authForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
+  <div class="auth-box"><button class="auth-close" id="authClose" type="button" aria-label="Close">×</button>
+    <a class="brand" href="#home"><span class="logo">◔</span>QFS Ledger</a>
+    <h2 id="authTitle">Create your QFS Ledger account</h2><p id="authIntro">Use a test account for this prototype.</p>
+    <form id="authForm">
+      <div id="nameField"><label for="authName">Full name</label><input id="authName" name="fullName" autocomplete="name" placeholder="Your name"></div>
+      <label for="authEmail">Email address</label><input id="authEmail" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+      <label for="authPassword">Password</label><input id="authPassword" name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="At least 8 characters">
+      <div class="auth-warning">Prototype only. Use a unique test password. Never enter a cryptocurrency wallet password, recovery phrase, or private key here.</div>
+      <button class="btn primary full" id="authSubmit" type="submit">Create account</button>
+    </form>
+    <button class="auth-switch" id="authSwitch" type="button">Already have an account? Log in</button>
+  </div>
+</div>
 
-  const email = document.getElementById('authEmail').value.trim();
-  const password = document.getElementById('authPassword').value;
-  const fullName = document.getElementById('authName').value.trim();
-  const button = document.getElementById('authSubmit');
-
-  button.disabled = true;
-
-  try {
-    let result;
-
-    if (mode === 'signup') {
-      result = await supabaseClient.auth.signUp({
-        email: email,
-        password: password,
-        options: {
-  data: { full_name: fullName },
-  emailRedirectTo: 'https://chidaluseniorman2020-source.github.io/Qfsledger/'
-        }
-        }
-      });
-    } else {
-      result = await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
-    }
-
-    if (result.error) throw result.error;
-
-    if (mode === 'signup') {
-      showNotice('Registration submitted. Check your email to confirm your account.');
-    } else {
-      overlay.classList.remove('open');
-      showNotice('Login successful!');
-    }
-  } catch (error) {
-    showNotice(error.message || 'Something went wrong. Please try again.');
-  } finally {
-    button.disabled = false;
-  }
-});
-document.querySelectorAll('[data-gated]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();if(!demoUnlocked)openAuth('login');else showNotice(a.dataset.gated+' is only a visual preview; no real wallet transaction is connected.')}));
-document.querySelectorAll('[data-demo]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();openAuth(el.dataset.demo.toLowerCase().includes('log')?'login':'signup')}));
-</script>
-<script>
-document.getElementById('linkWalletBtn')?.addEventListener('click', function(e) {
-  e.preventDefault();
-  const overlay = document.getElementById('authOverlay');
-  if (overlay) overlay.classList.add('open');
-  const title = document.getElementById('authTitle');
-  const intro = document.getElementById('authIntro');
-  if (title) title.textContent = 'Link Your Wallet';
-  if (intro) intro.textContent = 'Wallet connection is not implemented in this demo. Never enter or share your recovery phrase or private key.';
-});
-</script>
-
-<script>
-document.getElementById('sendSupportMessage')?.addEventListener('click', function () {
-  const notice = document.getElementById('notice');
-  if (notice) {
-    notice.textContent = 'Support messaging is not connected yet. Please check back later.';
-    notice.classList.add('show');
-    setTimeout(() => notice.classList.remove('show'), 4000);
-  } else {
-    alert('Support messaging is not connected yet. Please check back later.');
-  }
-});
-</script>
-  <!-- Supabase connection -->
+<!-- Load Supabase before the application code that uses it. -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL = "https://yjtwfcnehsmtzzedzemi.supabase.co";
-  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_0ITt5LrH8TkS9ABvgGKHyA_uvwREhGg";
+(() => {
+  'use strict';
 
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+  const SUPABASE_URL = 'https://yjtwfcnehsmtzzedzemi.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_0ITt5LrH8TkS9ABvgGKHyA_uvwREhGg';
+  const EMAIL_REDIRECT_URL = 'https://chidaluseniorman2020-source.github.io/Qfsledger/';
+
+  const menu = document.getElementById('menu');
+  const links = document.getElementById('links');
+  const overlay = document.getElementById('authOverlay');
+  const title = document.getElementById('authTitle');
+  const intro = document.getElementById('authIntro');
+  const nameField = document.getElementById('nameField');
+  const submitButton = document.getElementById('authSubmit');
+  const switchButton = document.getElementById('authSwitch');
+  const notice = document.getElementById('notice');
+  let mode = 'signup';
+  let noticeTimer;
+
+  function showNotice(message) {
+    notice.textContent = message;
+    notice.style.display = 'block';
+    clearTimeout(noticeTimer);
+    noticeTimer = setTimeout(() => { notice.style.display = 'none'; }, 6000);
+  }
+
+  let supabaseClient = null;
+  try {
+    if (window.supabase && typeof window.supabase.createClient === 'function') {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    } else {
+      console.error('Supabase library did not load.');
+    }
+  } catch (error) {
+    console.error('Supabase initialization failed:', error);
+  }
+
+  if (menu && links) {
+    menu.addEventListener('click', () => {
+      const isOpen = links.classList.toggle('open');
+      menu.setAttribute('aria-expanded', String(isOpen));
+      menu.textContent = isOpen ? '✕ Close' : '☰ Menu';
+    });
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+  }
+
+  function openAuth(newMode) {
+    mode = newMode === 'login' ? 'login' : 'signup';
+    title.textContent = mode === 'signup' ? 'Create your QFS Ledger account' : 'Log in to QFS Ledger';
+    intro.textContent = mode === 'signup'
+      ? 'After registration, check your email if confirmation is required.'
+      : 'Log in using the email and password for your test account.';
+    nameField.style.display = mode === 'signup' ? 'block' : 'none';
+    document.getElementById('authPassword').autocomplete = mode === 'signup' ? 'new-password' : 'current-password';
+    submitButton.textContent = mode === 'signup' ? 'Create account' : 'Log in';
+    switchButton.textContent = mode === 'signup' ? 'Already have an account? Log in' : "Don't have an account? Create one";
+    overlay.classList.add('open');
+  }
+
+  document.querySelectorAll('[data-auth]').forEach(button => {
+    button.addEventListener('click', () => openAuth(button.dataset.auth));
+  });
+  document.querySelectorAll('[data-demo]').forEach(button => {
+    button.addEventListener('click', () => {
+      showNotice(button.dataset.demo + ' is a visual preview only; no real wallet transaction is connected.');
+    });
+  });
+
+  document.getElementById('authClose').addEventListener('click', () => overlay.classList.remove('open'));
+  overlay.addEventListener('click', event => {
+    if (event.target === overlay) overlay.classList.remove('open');
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') overlay.classList.remove('open');
+  });
+  switchButton.addEventListener('click', () => openAuth(mode === 'signup' ? 'login' : 'signup'));
+
+  document.getElementById('authForm').addEventListener('submit', async event => {
+    event.preventDefault();
+
+    if (!supabaseClient) {
+      showNotice('The sign-in service did not load. Check your internet connection and refresh the page.');
+      return;
+    }
+
+    const email = document.getElementById('authEmail').value.trim();
+    const password = document.getElementById('authPassword').value;
+    const fullName = document.getElementById('authName').value.trim();
+
+    submitButton.disabled = true;
+    const previousText = submitButton.textContent;
+    submitButton.textContent = mode === 'signup' ? 'Creating account…' : 'Logging in…';
+
+    try {
+      let result;
+      if (mode === 'signup') {
+        result = await supabaseClient.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { full_name: fullName },
+            emailRedirectTo: EMAIL_REDIRECT_URL
+          }
+        });
+      } else {
+        result = await supabaseClient.auth.signInWithPassword({ email, password });
+      }
+
+      if (result.error) throw result.error;
+
+      if (mode === 'signup') {
+        if (result.data && result.data.session) {
+          showNotice('Account created and signed in.');
+        } else {
+          showNotice('Registration submitted. Check your email to confirm your account.');
+        }
+      } else {
+        overlay.classList.remove('open');
+        showNotice('Login successful.');
+      }
+    } catch (error) {
+      console.error('Authentication error:', error);
+      const message = error && error.message ? error.message : 'Something went wrong. Please try again.';
+      showNotice(message);
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = previousText;
+    }
+  });
+
+  document.getElementById('sendSupportMessage').addEventListener('click', () => {
+    showNotice('Support messaging is not connected yet. Please check back later.');
+  });
+
+  // Keep the prototype explicit: the wallet-link control does not request wallet secrets.
+  window.addEventListener('error', event => {
+    console.error('Page error:', event.message);
+  });
+})();
 </script>
-</body></html>
+</body>
+</html>
