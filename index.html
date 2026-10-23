@@ -125,7 +125,48 @@ document.getElementById('authClose').onclick=()=>overlay.classList.remove('open'
 overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.classList.remove('open')});
 switchBtn.onclick=()=>openAuth(mode==='signup'?'login':'signup');
 function showNotice(msg){const n=document.getElementById('notice');n.textContent=msg;n.style.display='block';clearTimeout(t);t=setTimeout(()=>n.style.display='none',4500)}
-document.getElementById('authForm').addEventListener('submit',e=>{e.preventDefault();overlay.classList.remove('open');demoUnlocked=true;showNotice('Demo preview opened. This is not a real account; wallet functions are not connected.');document.getElementById('features').scrollIntoView({behavior:'smooth'})});
+document.getElementById('authForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const fullName = document.getElementById('authName').value.trim();
+  const button = document.getElementById('authSubmit');
+
+  button.disabled = true;
+
+  try {
+    let result;
+
+    if (mode === 'signup') {
+      result = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: { full_name: fullName }
+        }
+      });
+    } else {
+      result = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+    }
+
+    if (result.error) throw result.error;
+
+    if (mode === 'signup') {
+      showNotice('Registration submitted. Check your email to confirm your account.');
+    } else {
+      overlay.classList.remove('open');
+      showNotice('Login successful!');
+    }
+  } catch (error) {
+    showNotice(error.message || 'Something went wrong. Please try again.');
+  } finally {
+    button.disabled = false;
+  }
+});
 document.querySelectorAll('[data-gated]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();if(!demoUnlocked)openAuth('login');else showNotice(a.dataset.gated+' is only a visual preview; no real wallet transaction is connected.')}));
 document.querySelectorAll('[data-demo]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();openAuth(el.dataset.demo.toLowerCase().includes('log')?'login':'signup')}));
 </script>
