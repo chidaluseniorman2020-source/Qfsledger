@@ -33,7 +33,7 @@
     .trust{display:flex;gap:17px;flex-wrap:wrap;font-size:12px;color:#526783}
     .trust span{background:#e6f0ff;color:var(--blue);padding:8px;border-radius:50%;margin-right:5px}
     .visual{min-height:370px;display:flex;justify-content:center;align-items:center;position:relative}
-    .phone{z-index:2;width:250px;border:7px solid #172b45;border-radius:34px;background:white;padding:17px 13px;box-shadow:0 20px 40px #173a6924}
+    .phone{z-index:2;width:250px;border:7px solid #172b45;border-radius:42px;background:white;padding:28px 13px 17px;box-shadow:0 20px 40px #173a6924;position:relative;overflow:hidden}.phone:before{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);width:76px;height:17px;border-radius:12px;background:#101722;z-index:3}.phone:after{content:"";position:absolute;inset:0;border:2px solid #52627a;border-radius:35px;pointer-events:none}
     .ptop{font-weight:bold;font-size:13px;margin-bottom:18px}
     .balance-label{font-size:11px;color:#7185a0}
     .balance{font-size:25px;font-weight:bold;margin:5px 0}
@@ -99,7 +99,7 @@
 </head>
 <body>
 <header><nav class="nav">
-  <a class="brand" href="#home"><span class="logo">◔</span>QFS Ledger</a>
+  <a class="brand" href="#home"><span class="logo">Q</span>QFS Ledger</a>
   <button class="menu" id="menu" type="button" aria-expanded="false">☰ Menu</button>
   <div class="links" id="links"><a href="#home">Home</a><a href="#assets">Assets</a><a href="#features">Features</a><a href="#why">Security</a><a href="#faq">FAQ</a></div>
   <div class="actions"><button class="btn outline" type="button" data-auth="login">Log in</button><button class="btn primary" type="button" data-auth="signup">Create account</button></div>
@@ -107,23 +107,23 @@
 <main>
   <section class="hero" id="home"><div class="hero-in">
     <div><div class="eyebrow">Your digital assets. Our priority.</div><h1>Welcome to<br><span class="blue">QFS Ledger</span></h1>
-      <p>A clean, simple interface concept for exploring digital asset tools. This website is a prototype, not a functioning cryptocurrency wallet.</p>
+      <p>Your security matters. QFS Ledger is designed with account protection in mind. Use a strong, unique password and never share your login details or recovery information.</p>
       <div class="row"><button class="btn primary" type="button" data-auth="signup">Get Started →</button><a class="btn outline" href="#why">Learn More</a></div>
       <div class="trust"><div><span>♢</span>Prototype preview</div><div><span>ϟ</span>Mobile friendly</div><div><span>◎</span>Transparent demo</div></div>
     </div>
-    <div class="visual"><div class="card"><div class="logo">◔</div><strong>QFS Ledger</strong><small>PROTOTYPE PREVIEW<br>DEMO DATA ONLY</small></div>
-      <div class="phone"><div class="ptop"><span class="logo" style="display:inline-grid;width:23px;height:23px;font-size:12px;vertical-align:middle">◔</span> QFS Ledger</div>
-        <div class="balance-label">Example Balance (demo)</div><div class="balance">$2,458.32</div><div class="green">Sample data only</div>
+    <div class="visual"><div class="card"><div class="logo">Q</div><strong>QFS Ledger</strong><small>ACCOUNT SECURITY<br>MATTERS</small></div>
+      <div class="phone"><div class="ptop"><span class="logo" style="display:inline-grid;width:23px;height:23px;font-size:12px;vertical-align:middle">Q</span> QFS Ledger</div>
+        <div class="balance-label">Total Balance</div><div class="balance">********</div><div class="green">Crypto Prices</div>
         <div class="chart"><svg viewBox="0 0 220 60" preserveAspectRatio="none"><polyline points="0,49 20,40 35,44 55,30 72,36 92,24 110,29 127,18 145,24 165,10 182,17 199,4 220,8" fill="none" stroke="#1768ef" stroke-width="2.5" stroke-linecap="round"/></svg></div>
         <div class="quick"><button type="button" data-demo="Send"><b>↗</b>Send</button><button type="button" data-demo="Receive"><b>↓</b>Receive</button><button type="button" data-demo="Buy crypto"><b>▣</b>Buy</button><button type="button" data-demo="Swap"><b>⇄</b>Swap</button></div>
-        <div class="assets-head" id="assets">Example assets <span class="blue">Demo</span></div>
-        <div class="asset"><span class="coin">◎</span><span class="asset-name">XLM<small>Stellar Lumens</small></span><span class="amount">1,250.00<small>Sample</small></span></div>
-        <div class="asset"><span class="coin">₿</span><span class="asset-name">BTC<small>Bitcoin</small></span><span class="amount">0.0324<small>Sample</small></span></div>
-        <div class="asset"><span class="coin">◆</span><span class="asset-name">ETH<small>Ethereum</small></span><span class="amount">0.12<small>Sample</small></span></div>
+        <div class="assets-head" id="assets">My Assets <span class="blue">Crypto Prices</span></div>
+        <div class="asset"><span class="coin">◎</span><span class="asset-name">XLM<small>Stellar Lumens</small></span><span class="amount">********<small>Crypto Prices</small></span></div>
+        <div class="asset"><span class="coin">₿</span><span class="asset-name">BTC<small>Bitcoin</small></span><span class="amount">********<small>Crypto Prices</small></span></div>
+        <div class="asset"><span class="coin">◆</span><span class="asset-name">ETH<small>Ethereum</small></span><span class="amount">********<small>Crypto Prices</small></span></div>
       </div>
     </div>
   </div></section>
-  <section class="market"><div class="market-title">⊕ &nbsp; Sample Crypto Prices</div><div class="ticker"><span class="coin">◎</span><small>XLM</small><strong>$0.2563</strong><em>Sample</em></div><div class="ticker"><span class="coin">₿</span><small>BTC</small><strong>$63,482.12</strong><em>Sample</em></div><div class="ticker"><span class="coin">◆</span><small>ETH</small><strong>$3,246.17</strong><em>Sample</em></div><div class="ticker"><span class="coin">✕</span><small>XRP</small><strong>$0.4867</strong><em>Sample</em></div></section>
+  <section class="market"><div class="market-title">⊕ &nbsp; Crypto Prices</div><div class="ticker"><span class="coin">◎</span><small>XLM</small><strong>$0.2563</strong><em>Crypto Prices</em></div><div class="ticker"><span class="coin">₿</span><small>BTC</small><strong>$63,482.12</strong><em>Crypto Prices</em></div><div class="ticker"><span class="coin">◆</span><small>ETH</small><strong>$3,246.17</strong><em>Crypto Prices</em></div><div class="ticker"><span class="coin">✕</span><small>XRP</small><strong>$0.4867</strong><em>Crypto Prices</em></div></section>
   <section class="section features" id="features"><div><div class="eyebrow">The QFS Ledger concept</div><h2>Everything in<br><span class="blue">One Place</span></h2><p>Explore a sample layout for digital asset information. Real account and transaction functions require secure backend implementation and independent testing.</p><button class="btn primary" type="button" data-auth="signup">Create account</button></div>
     <div class="grid"><div class="feature" data-demo="Buy Crypto"><div class="icon">▣</div><h3>Buy Crypto</h3><p>Preview where buying tools could appear.</p></div><div class="feature" data-demo="Send and Receive"><div class="icon">⇄</div><h3>Send &amp; Receive</h3><p>Explore a sample transfer interface.</p></div><div class="feature" data-demo="Swap"><div class="icon">⇆</div><h3>Swap</h3><p>Preview exchanging asset layouts.</p></div><div class="feature" data-demo="Trade"><div class="icon">↗</div><h3>Trade</h3><p>Learn about trading tool layouts.</p></div><div class="feature"><div class="icon">▱</div><h3>Portfolio</h3><p>See an example portfolio design.</p></div><div class="feature" data-demo="Transactions"><div class="icon">▤</div><h3>Transactions</h3><p>Preview where history could appear.</p></div></div>
   </section>
@@ -136,18 +136,17 @@
   </div></section>
   <section class="cta"><div><h2>Explore QFS Ledger</h2><p>Prototype website — demo data only; no live wallet connection.</p></div><button class="btn" type="button" data-auth="signup">Create account →</button></section>
 </main>
-<footer><div class="foot"><div><a class="brand" href="#home"><span class="logo">◔</span>QFS Ledger</a><p>A clean interface concept for a digital asset platform.</p></div><div><h4>Product</h4><a href="#assets">Assets</a><a href="#features">Features</a></div><div><h4>Company</h4><a href="#why">Security</a><a href="#faq">Platform information</a></div><div><h4>Support</h4><p>Support messaging is not connected yet.</p></div></div><div class="copy"><span>© 2026 QFS Ledger. Prototype website.</span><span>Demo data only · No live wallet connection</span></div></footer>
+<footer><div class="foot"><div><a class="brand" href="#home"><span class="logo">Q</span>QFS Ledger</a><p>A clean interface concept for a digital asset platform.</p></div><div><h4>Product</h4><a href="#assets">Assets</a><a href="#features">Features</a></div><div><h4>Company</h4><a href="#why">Security</a><a href="#faq">Platform information</a></div><div><h4>Support</h4><p>Support messaging is not connected yet.</p></div></div><div class="copy"><span>© 2026 QFS Ledger. Prototype website.</span><span>Demo data only · No live wallet connection</span></div></footer>
 <button class="btn primary support-float" type="button" id="sendSupportMessage">Need help? Contact us</button>
 <div class="notice" id="notice" role="status" aria-live="polite"></div>
 <div class="auth-overlay" id="authOverlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
   <div class="auth-box"><button class="auth-close" id="authClose" type="button" aria-label="Close">×</button>
-    <a class="brand" href="#home"><span class="logo">◔</span>QFS Ledger</a>
+    <a class="brand" href="#home"><span class="logo">Q</span>QFS Ledger</a>
     <h2 id="authTitle">Create your QFS Ledger account</h2><p id="authIntro">Use a test account for this prototype.</p>
     <form id="authForm">
       <div id="nameField"><label for="authName">Full name</label><input id="authName" name="fullName" autocomplete="name" placeholder="Your name"></div>
       <label for="authEmail">Email address</label><input id="authEmail" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
       <label for="authPassword">Password</label><input id="authPassword" name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="At least 8 characters">
-      <div class="auth-warning">Prototype only. Use a unique test password. Never enter a cryptocurrency wallet password, recovery phrase, or private key here.</div>
       <button class="btn primary full" id="authSubmit" type="submit">Create account</button>
     </form>
     <button class="auth-switch" id="authSwitch" type="button">Already have an account? Log in</button>
