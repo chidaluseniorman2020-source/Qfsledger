@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QFS Ledger — Private Support Inbox</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:20px;background:#f3f6fb;color:#14233b;font-family:Arial,sans-serif}.wrap{max-width:850px;margin:30px auto}.card{background:white;border:1px solid #e2e8f0;border-radius:16px;padding:24px}.brand{font-size:21px;font-weight:bold;color:#10284c}h1{font-size:25px}label{display:block;font-weight:bold;margin:14px 0 6px}input{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px}button{background:#0758e8;color:white;border:0;border-radius:9px;padding:13px 18px;font-weight:bold;margin-top:16px}.secondary{background:#e8eef8;color:#18345c;margin-left:8px}.muted,.meta{color:#64748b;font-size:13px}.status{margin-top:14px;white-space:pre-wrap}.hidden{display:none}.message{border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin:13px 0}.message h3{margin:0 0 8px;font-size:16px}.body{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5}.top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+</style></head><body><main class="wrap"><section class="card">
+<div class="brand">QFS Ledger</div><h1>Private Support Inbox</h1>
+<p class="muted">Administrator access only. Sign in with the authorised QFS Ledger account.</p>
+<form id="loginForm">
+<label for="email">Administrator email</label><input id="email" type="email" autocomplete="username" required>
+<label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required>
+<button id="loginButton" type="submit">Log in</button></form>
+<div id="status" class="status" role="status" aria-live="polite"></div>
+<div id="inbox" class="hidden"><div class="top"><p class="muted" id="signedIn"></p><div><button id="refreshButton" type="button">Refresh</button><button id="logoutButton" class="secondary" type="button">Log out</button></div></div><div id="messages"></div></div>
+</section></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+ const URL="https://yjtwfcnehsmtzzedzemi.supabase.co";
+ const KEY="sb_publishable_0ITt5LrH8TkS9ABvgGKHyA_uvwREhGg";
+ const ADMIN="6d765d99-a7fa-4241-aac6-85aa7e031c35";
+ const db=window.supabase.createClient(URL,KEY);
+ const form=document.getElementById("loginForm"),status=document.getElementById("status");
+ const inbox=document.getElementById("inbox"),messages=document.getElementById("messages");
+ function say(t,bad=false){status.textContent=t;status.style.color=bad?"#b42318":"#166534"}
+ function val(x){return x===null||x===undefined||x===""?"Not provided":String(x)}
+ async function load(){
+  messages.textContent="Loading messages...";
+  const {data,error}=await db.from("support_messages").select("*");
+  if(error){messages.textContent="";say("Could not load messages: "+error.message,true);return}
+  messages.textContent="";
+  if(!data||!data.length){messages.textContent="No support messages yet.";return}
+  data.sort((a,b)=>(Date.parse(b.created_at||"")||0)-(Date.parse(a.created_at||"")||0));
+  for(const row of data){
+   const box=document.createElement("article");box.className="message";
+   const title=document.createElement("h3");title.textContent=val(row.subject||"Customer support message");
+   const meta=document.createElement("div");meta.className="meta";
+   meta.textContent=["Name: "+val(row.customer_name),"Email: "+val(row.customer_email),"Received: "+val(row.created_at)].join(" • ");
+   const body=document.createElement("div");body.className="body";body.textContent=val(row.message);
+   box.append(title,meta,body);messages.appendChild(box);
+  }
+  say("Loaded "+data.length+" support message(s).");
+ }
+ form.addEventListener("submit",async e=>{
+  e.preventDefault();const btn=document.getElementById("loginButton");btn.disabled=true;say("Signing in...");
+  const {data,error}=await db.auth.signInWithPassword({email:document.getElementById("email").value.trim(),password:document.getElementById("password").value});
+  btn.disabled=false;
+  if(error){say("Login failed: "+error.message,true);return}
+  if(!data.user||data.user.id!==ADMIN){await db.auth.signOut();say("This account is not authorised to access the support inbox.",true);return}
+  form.classList.add("hidden");inbox.classList.remove("hidden");document.getElementById("signedIn").textContent="Signed in as "+data.user.email;await load();
+ });
+ document.getElementById("refreshButton").addEventListener("click",load);
+ document.getElementById("logoutButton").addEventListener("click",async()=>{await db.auth.signOut();inbox.classList.add("hidden");form.classList.remove("hidden");form.reset();messages.textContent="";say("You have been logged out.")});
+})();
+</script></body></html>
