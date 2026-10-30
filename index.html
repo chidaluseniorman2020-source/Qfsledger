@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fff">
-  <title>QFS Ledger — Your Digital Assets</title>
+  <title> Ledger — Your Digital Assets</title>
   <style>
     :root{--blue:#0878ff;--navy:#071a35;--muted:#617695;--line:#dce7f5;--pale:#f4f8ff}
     *{box-sizing:border-box}
@@ -96,7 +96,9 @@
     @media(max-width:950px){.visual{min-height:500px}.links{gap:10px}.links a{font-size:11px}.brand{font-size:21px}.card{right:-5px;width:125px}}
     @media(max-width:760px){.visual{min-height:500px}.phone{width:265px;min-height:510px}.card{display:none!important}.nav{padding:10px 15px}.menu{display:block}.links{display:none;order:3;width:100%;flex-direction:column;gap:0;margin:0}.links.open{display:flex;background:#041329;color:#fff}.links a{padding:11px 4px;border-top:1px solid #17345b;font-size:13px;color:#e5efff}.actions{display:flex;order:4;width:100%}.actions .btn{flex:1}.hero-in{grid-template-columns:1fr;padding:38px 20px 28px}.hero h1{font-size:45px}.hero p{font-size:15px}.visual{min-height:345px}.phone{width:235px}.card{display:none!important}.market{padding:14px}.section,.long-section{padding:45px 20px}.features,.security-in{grid-template-columns:1fr;gap:25px}.grid,.features .grid{grid-template-columns:repeat(2,1fr)}.security-in{padding:40px 20px}.steps-grid,.info-grid{grid-template-columns:1fr 1fr}.cta{margin:25px 15px;padding:23px;flex-direction:column;align-items:flex-start}.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:1/-1}.support-float{right:10px;padding:12px;font-size:12px}}
     @media(max-width:420px){.hero h1{font-size:39px}.card{display:none!important}.phone{margin-left:30px;width:245px;min-height:490px}.grid,.features .grid,.secgrid,.steps-grid,.info-grid{grid-template-columns:1fr}.foot{grid-template-columns:1fr}}
-  </style>
+  
+    .support-overlay{position:fixed;inset:0;background:rgba(8,22,45,.62);display:none;align-items:center;justify-content:center;padding:18px;z-index:10000}.support-overlay.open{display:flex}.support-box{position:relative;width:min(100%,480px);background:#fff;border-radius:20px;padding:28px;box-shadow:0 24px 70px rgba(0,0,0,.25);color:#10284c}.support-box h2{margin:0 36px 8px 0;font-size:25px}.support-box p{margin:0 0 18px;color:#5e6c80;line-height:1.5}.support-box label{display:block;font-weight:700;margin:0 0 8px}.support-box textarea{width:100%;min-height:140px;resize:vertical;border:1px solid #d5deeb;border-radius:12px;padding:13px;font:inherit;box-sizing:border-box;color:#10284c}.support-box textarea:focus{outline:2px solid #0758e8;outline-offset:1px}.support-close{position:absolute;right:16px;top:12px;border:0;background:transparent;font-size:30px;line-height:1;cursor:pointer;color:#5e6c80}.support-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end;flex-wrap:wrap}.support-cancel{border:1px solid #d5deeb;background:#fff;color:#10284c;border-radius:10px;padding:11px 16px;font-weight:700;cursor:pointer}.support-box .btn:disabled{opacity:.65;cursor:wait}@media(max-width:480px){.support-box{padding:22px}.support-box h2{font-size:22px}}
+</style>
 </head>
 <body>
 <header><nav class="nav">
@@ -141,6 +143,7 @@
 </main>
 <footer><div class="foot"><div><a class="brand" href="#home"><span class="logo">Q</span>QFS Ledger</a><p>Your digital assets. Our priority.</p></div><div><h4>Product</h4><a href="#assets">Assets</a><a href="#features">Features</a></div><div><h4>Company</h4><a href="#why">Security</a><a href="#faq">Platform information</a></div><div><h4>Support</h4><p>Contact our support team for assistance.</p></div></div><div class="copy"><span>© 2026 QFS Ledger.</span></div></footer>
 <button class="btn primary support-float" type="button" id="sendSupportMessage">Need help? Contact us</button>
+<div class="support-overlay" id="supportOverlay" role="dialog" aria-modal="true" aria-labelledby="supportTitle"><div class="support-box"><button class="support-close" type="button" id="supportClose" aria-label="Close support form">&times;</button><h2 id="supportTitle">Contact QFS Ledger Support</h2><p>Tell us how we can help. Your message will be sent to our support inbox.</p><form id="supportForm"><label for="supportMessage">Your message</label><textarea id="supportMessage" name="message" maxlength="5000" required placeholder="Type your message here..."></textarea><div class="support-actions"><button class="support-cancel" type="button" id="supportCancel">Cancel</button><button class="btn primary" type="submit" id="supportSubmit">Send message</button></div></form></div></div>
 <div class="notice" id="notice" role="status" aria-live="polite"></div>
 <div class="auth-overlay" id="authOverlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
   <div class="auth-box"><button class="auth-close" id="authClose" type="button" aria-label="Close">×</button>
@@ -284,8 +287,27 @@
     }
   });
 
-  document.getElementById('sendSupportMessage').addEventListener('click', () => {
-    showNotice('Support messaging is not connected yet. Please check back later.');
+  const supportOverlay = document.getElementById('supportOverlay');
+  const supportForm = document.getElementById('supportForm');
+  const supportMessage = document.getElementById('supportMessage');
+  const supportSubmit = document.getElementById('supportSubmit');
+  function closeSupportForm() { supportOverlay.classList.remove('open'); }
+  document.getElementById('sendSupportMessage').addEventListener('click', () => { supportOverlay.classList.add('open'); supportMessage.focus(); });
+  document.getElementById('supportClose').addEventListener('click', closeSupportForm);
+  document.getElementById('supportCancel').addEventListener('click', closeSupportForm);
+  supportOverlay.addEventListener('click', event => { if (event.target === supportOverlay) closeSupportForm(); });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape' && supportOverlay.classList.contains('open')) closeSupportForm(); });
+  supportForm.addEventListener('submit', async event => {
+    event.preventDefault(); const message = supportMessage.value.trim();
+    if (!message) { supportMessage.focus(); return; }
+    supportSubmit.disabled = true; supportSubmit.textContent = 'Sending...';
+    try {
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/send-support-message`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_PUBLISHABLE_KEY }, body: JSON.stringify({ message }) });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Your message could not be sent. Please try again.');
+      supportForm.reset(); closeSupportForm(); showNotice('Your support message has been sent successfully.');
+    } catch (error) { console.error('Support message error:', error); showNotice(error.message || 'Unable to send your message. Please try again.'); }
+    finally { supportSubmit.disabled = false; supportSubmit.textContent = 'Send message'; }
   });
 
   window.addEventListener('error', event => {
