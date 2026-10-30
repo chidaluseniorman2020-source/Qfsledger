@@ -6,24 +6,24 @@
   <meta name="theme-color" content="#fff">
   <title>QFS Ledger — Your Digital Assets</title>
   <style>
-    :root{--blue:#0758e8;--navy:#10284c;--muted:#617695;--line:#dce7f5;--pale:#f4f8ff}
+    :root{--blue:#0878ff;--navy:#071a35;--muted:#617695;--line:#dce7f5;--pale:#f4f8ff}
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{margin:0;font-family:Arial,system-ui,sans-serif;color:var(--navy)}
     a{color:inherit;text-decoration:none}
     button,input{font:inherit}
-    header{position:sticky;top:0;background:#fffffff2;border-bottom:1px solid var(--line);z-index:5}
+    header{position:sticky;top:0;background:#041329;border-bottom:1px solid #17345b;z-index:5;color:#fff}
     .nav{max-width:1150px;margin:auto;padding:12px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
     .brand{display:flex;align-items:center;gap:9px;font-size:23px;font-weight:800;white-space:nowrap}
-    .logo{width:40px;height:40px;border:3px solid var(--blue);border-radius:50%;display:grid;place-items:center;color:var(--blue);font-size:20px}
-    .links{display:flex;gap:16px;margin-left:auto;font-size:13px}
+    .logo{width:40px;height:40px;border:3px solid var(--blue);border-radius:50%;display:grid;place-items:center;color:var(--blue);font-size:22px;font-weight:900;box-shadow:0 0 0 3px #0878ff18,inset 0 0 10px #0878ff20}
+    .links{display:flex;gap:16px;margin-left:auto;font-size:13px;color:#dce8fb}
     .actions{display:flex;gap:8px}
     .btn{display:inline-block;border-radius:9px;padding:12px 17px;border:1px solid var(--blue);font-size:14px;font-weight:bold;cursor:pointer}
     .primary{background:var(--blue);color:white}
-    .outline{color:var(--blue);background:white}
+    .outline{color:#fff;background:transparent;border-color:#1684ff}
     .menu{display:none;margin-left:auto;padding:8px;background:white;border:1px solid var(--line);border-radius:8px;color:var(--blue)}
-    .hero{background:radial-gradient(ellipse at 75% 45%,#dfebff,#f7faff 48%,white 80%);border-bottom:1px solid var(--line)}
-    .hero-in{max-width:1150px;margin:auto;padding:55px 25px;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+    .hero{background:radial-gradient(ellipse at 78% 48%,#123d79 0%,#071d3d 43%,#041329 78%);border-bottom:1px solid #183a68;color:#fff}.hero p{color:#d1def2}.hero .eyebrow{color:#39a8ff}.hero .trust{color:#d2e4ff}.hero .trust span{background:#123b70;color:#58b7ff}.hero .outline{background:transparent;color:#fff;border-color:#478fe8}
+    .hero-in{max-width:1150px;margin:auto;padding:48px 25px 36px;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
     .eyebrow{font-size:12px;font-weight:bold;letter-spacing:1px;color:#8295b1;text-transform:uppercase}
     h1{font-size:clamp(42px,5vw,62px);line-height:1.04;letter-spacing:-2px;margin:15px 0}
     .blue{color:var(--blue)}
@@ -32,9 +32,9 @@
     .row{display:flex;gap:12px;flex-wrap:wrap;margin:25px 0}
     .trust{display:flex;gap:17px;flex-wrap:wrap;font-size:12px;color:#526783}
     .trust span{background:#e6f0ff;color:var(--blue);padding:8px;border-radius:50%;margin-right:5px}
-    .visual{min-height:370px;display:flex;justify-content:center;align-items:center;position:relative}
-    .phone{z-index:2;width:250px;border:7px solid #172b45;border-radius:42px;background:white;padding:28px 13px 17px;box-shadow:0 20px 40px #173a6924;position:relative;overflow:hidden}.phone:before{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);width:76px;height:17px;border-radius:12px;background:#101722;z-index:3}.phone:after{content:"";position:absolute;inset:0;border:2px solid #52627a;border-radius:35px;pointer-events:none}
-    .ptop{font-weight:bold;font-size:13px;margin-bottom:18px}
+    .visual{min-height:600px;display:flex;justify-content:center;align-items:center;position:relative;perspective:1100px}
+    .phone{z-index:3;width:310px;min-height:590px;border:5px solid #b9c5d4;border-radius:48px;background:linear-gradient(105deg,#cbd5e1 0%,#64748b 2%,#111827 5%,#020712 95%,#94a3b8 99%);padding:43px 14px 18px;box-shadow:0 38px 75px #000b, inset 0 0 0 2px #e2e8f0, inset 0 0 0 5px #26364d;position:relative;overflow:hidden;color:#fff;transform:rotateY(-2deg)}.phone:before{content:"";position:absolute;top:11px;left:50%;transform:translateX(-50%);width:105px;height:28px;border-radius:18px;background:#02050a;z-index:5;box-shadow:inset 0 1px 2px #34445b}.phone:after{content:"";position:absolute;inset:0;border:1px solid #ffffff66;border-radius:44px;pointer-events:none;box-shadow:inset 0 0 18px #ffffff12}.phone .ptop{color:#fff}.phone .balance-label,.phone .asset small{color:#9fb3d1}.phone .balance{color:#fff}.phone .chart{display:none}.phone .quick button{background:transparent;color:#d9e7ff}.phone .quick b{background:#0c5ed6;color:#fff}.phone .assets-head{color:#fff}.phone .asset{border-color:#1d304b}.phone .coin{color:white}.phone .amount{color:#dbe8fa}
+    .ptop{font-weight:bold;font-size:13px;margin-bottom:18px;text-align:center}.phone-status{position:absolute;top:14px;left:18px;right:18px;font-size:9px;color:#fff;display:flex;justify-content:space-between}.phone .logo{width:22px;height:22px;font-size:12px;border-width:2px;color:#43a8ff;border-color:#1684ff;display:inline-grid;vertical-align:middle;margin-right:5px}
     .balance-label{font-size:11px;color:#7185a0}
     .balance{font-size:25px;font-weight:bold;margin:5px 0}
     .green{color:#08a879;font-size:11px}
@@ -44,26 +44,27 @@
     .quick button{border:0;background:white;color:#536a8a;font-size:10px;cursor:pointer}
     .quick b{display:block;background:#e7f0ff;color:var(--blue);border-radius:50%;padding:9px;margin:0 auto 5px;width:32px}
     .assets-head{font-weight:bold;font-size:12px;display:flex;justify-content:space-between}
-    .asset{display:flex;align-items:center;gap:8px;padding:9px 0;border-top:1px solid #edf2f9;font-size:11px}
-    .coin{width:26px;height:26px;background:#e7f0ff;border-radius:50%;display:grid;place-items:center;color:var(--blue);font-weight:bold}
-    .asset-name{flex:1}.asset small{display:block;color:#8494aa;margin-top:3px}
+    .asset{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid #1c304d;font-size:11px}
+    .coin{width:27px;height:27px;background:#e7f0ff;border-radius:50%;display:grid;place-items:center;color:var(--blue);font-weight:bold;flex:0 0 27px}.coin.btc{background:#f7931a;color:#fff}.coin.eth{background:#627eea;color:#fff}.coin.bnb{background:#f3ba2f;color:#fff}.coin.xrp{background:#252a34;color:#fff}.coin.xlm{background:#dce7f7;color:#142a48}.coin.trx{background:#e84142;color:#fff}.coin.usdt{background:#26a17b;color:#fff}
+    .coin img{width:100%;height:100%;object-fit:contain;border-radius:50%}.asset-name{flex:1}.asset small{display:block;color:#8494aa;margin-top:3px}
     .amount{text-align:right}
-    .card{position:absolute;right:0;top:75px;width:155px;height:215px;border-radius:17px;background:linear-gradient(145deg,#17417d,#091c3c);color:white;transform:rotate(8deg);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-shadow:0 15px 30px #173a6924}
-    .card .logo{width:52px;height:52px;color:#dceaff;border-color:#dceaff}
+    .card{position:absolute;left:2px;top:82px;width:260px;height:490px;border-radius:43px;background:linear-gradient(125deg,#f7f7f4,#c6c9ca 42%,#858d98 100%);color:#1a2636;transform:translateX(-16px) rotateY(15deg) rotateZ(-5deg);display:block;text-align:center;box-shadow:0 30px 55px #0008;border:4px solid #d8dce1;z-index:1}.card:before{content:"";position:absolute;top:22px;left:20px;width:112px;height:120px;border-radius:30px;background:linear-gradient(145deg,#e9ecef,#aeb7c1);box-shadow:inset 0 0 0 2px #f8f9fa}.card:after{content:"";position:absolute;top:35px;left:33px;width:32px;height:32px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#40516a,#050b15 48%,#02040a 70%);box-shadow:66px 0 0 -1px #101927,66px 0 0 2px #6f7882,0 65px 0 -1px #101927,0 65px 0 2px #6f7882,66px 65px 0 -1px #101927,66px 65px 0 2px #6f7882}.card .logo{position:absolute;top:230px;left:50%;transform:translateX(-50%);color:#526176;border-color:#687487}.card strong{position:absolute;bottom:48px;left:0;right:0;margin:0;font-size:12px}.card small{display:none}
+    .card .apple-mark{position:absolute;top:224px;left:50%;transform:translateX(-50%);width:43px;height:52px;display:block;filter:drop-shadow(0 1px 1px #ffffff70)}
+    .card .apple-mark svg{width:100%;height:100%;display:block;fill:#68717b}
     .card strong{margin:12px}.card small{font-size:9px;line-height:1.5}
-    .market{display:flex;gap:0;overflow:auto;align-items:center;max-width:1150px;margin:auto;padding:17px 20px}
-    .market-title{font-weight:bold;white-space:nowrap;padding-right:20px}
-    .ticker{border-left:1px solid var(--line);min-width:135px;padding:0 16px;display:grid;grid-template-columns:28px 1fr;column-gap:8px}
+    .market{display:flex;gap:0;overflow:auto;align-items:center;max-width:1150px;margin:auto;padding:17px 20px;background:#041329;color:#fff;border-bottom:1px solid #17345b}
+    .market-title{font-weight:bold;white-space:nowrap;padding-right:20px;color:#8fb9f4}
+    .ticker{border-left:1px solid #24446d;min-width:135px;padding:0 16px;display:grid;grid-template-columns:28px 1fr;column-gap:8px}
     .ticker .coin{grid-row:span 3}.ticker small{font-size:10px;color:#7185a0}.ticker strong{font-size:12px}.ticker em{font-size:10px;color:#08a879;font-style:normal}
     .section{max-width:1150px;margin:auto;padding:65px 25px}
-    .features{display:grid;grid-template-columns:.8fr 1.5fr;gap:45px;align-items:center}
+    .features{display:block;max-width:1150px;margin:auto;padding:55px 25px 65px}.features>div:first-child{text-align:center;margin:0 auto 28px;max-width:650px}.features .grid{grid-template-columns:repeat(5,1fr)}
     .section h2{font-size:32px;line-height:1.15;margin:12px 0}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
-    .feature{border:1px solid var(--line);border-radius:12px;padding:17px;min-height:142px;cursor:pointer}
+    .feature{border:1px solid #dce7f5;border-radius:12px;padding:17px;min-height:142px;background:#fff;cursor:pointer}
     .icon{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:#e7f0ff;color:var(--blue);font-weight:bold;margin-bottom:10px}
     .feature h3{font-size:14px;margin:0 0 7px}.feature p{font-size:12px;margin:0}
-    .security{background:linear-gradient(110deg,#f0f6ff,#fff);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-    .security-in{max-width:1150px;margin:auto;padding:48px 25px;display:grid;grid-template-columns:1fr 1.3fr;gap:50px}
+    .security{background:linear-gradient(110deg,#061a36,#071d3d 65%,#041329);border-top:1px solid #17345b;border-bottom:1px solid #17345b;color:#fff}.security h2{color:#fff}.security p{color:#c5d6ef}.security .eyebrow{color:#42aaff}.security .icon{background:#123d76;color:#63b8ff}
+    .security-in{max-width:1150px;margin:auto;padding:42px 25px;display:grid;grid-template-columns:1fr 1.3fr;gap:50px;align-items:center}
     .secgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
     .secitem{display:flex;gap:12px}.secitem h3{font-size:14px;margin:0 0 7px}.secitem p{font-size:12px;margin:0}
     .long-section{max-width:1150px;margin:auto;padding:65px 25px}
@@ -92,28 +93,14 @@
     .auth-switch{border:0;background:transparent;color:var(--blue);font-weight:bold;padding:13px 0 0;cursor:pointer}
     .auth-warning{background:#fff6df;border:1px solid #f1d99a;padding:10px;border-radius:8px;font-size:11px;color:#735a19;line-height:1.5;margin-top:12px}
     .btn:disabled{opacity:.65;cursor:wait}
-    @media(max-width:950px){.links{gap:10px}.links a{font-size:11px}.brand{font-size:21px}.card{right:-5px;width:125px}}
-    @media(max-width:760px){.nav{padding:10px 15px}.menu{display:block}.links{display:none;order:3;width:100%;flex-direction:column;gap:0;margin:0}.links.open{display:flex}.links a{padding:11px 4px;border-top:1px solid #edf2f8;font-size:13px}.actions{display:flex;order:4;width:100%}.actions .btn{flex:1}.hero-in{grid-template-columns:1fr;padding:38px 20px 28px}.hero h1{font-size:45px}.hero p{font-size:15px}.visual{min-height:345px}.phone{width:235px}.card{right:0;width:115px;height:180px}.market{padding:14px}.section,.long-section{padding:45px 20px}.features,.security-in{grid-template-columns:1fr;gap:25px}.grid{grid-template-columns:repeat(2,1fr)}.security-in{padding:40px 20px}.steps-grid,.info-grid{grid-template-columns:1fr 1fr}.cta{margin:25px 15px;padding:23px;flex-direction:column;align-items:flex-start}.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:1/-1}.support-float{right:10px;padding:12px;font-size:12px}}
-    @media(max-width:420px){.hero h1{font-size:39px}.card{right:-7px;width:100px}.phone{margin-left:-14px}.grid,.secgrid,.steps-grid,.info-grid{grid-template-columns:1fr}.foot{grid-template-columns:1fr}}
-
-    .support-overlay{position:fixed;inset:0;background:rgba(8,22,45,.62);display:none;align-items:center;justify-content:center;padding:18px;z-index:10000}
-    .support-overlay.open{display:flex}
-    .support-box{position:relative;width:min(100%,480px);background:#fff;border-radius:20px;padding:28px;box-shadow:0 24px 70px rgba(0,0,0,.25);color:#10284c}
-    .support-box h2{margin:0 36px 8px 0;font-size:25px}
-    .support-box p{margin:0 0 18px;color:#5e6c80;line-height:1.5}
-    .support-box label{display:block;font-weight:700;margin:0 0 8px}
-    .support-box textarea{width:100%;min-height:140px;resize:vertical;border:1px solid #d5deeb;border-radius:12px;padding:13px;font:inherit;box-sizing:border-box;color:#10284c}
-    .support-box textarea:focus{outline:2px solid #0758e8;outline-offset:1px}
-    .support-close{position:absolute;right:16px;top:12px;border:0;background:transparent;font-size:30px;line-height:1;cursor:pointer;color:#5e6c80}
-    .support-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end;flex-wrap:wrap}
-    .support-cancel{border:1px solid #d5deeb;background:#fff;color:#10284c;border-radius:10px;padding:11px 16px;font-weight:700;cursor:pointer}
-    .support-box .btn:disabled{opacity:.65;cursor:wait}
-    @media(max-width:480px){.support-box{padding:22px}.support-box h2{font-size:22px}}
+    @media(max-width:950px){.visual{min-height:500px}.links{gap:10px}.links a{font-size:11px}.brand{font-size:21px}.card{right:-5px;width:125px}}
+    @media(max-width:760px){.visual{min-height:500px}.phone{width:265px;min-height:510px}.card{display:none!important}.nav{padding:10px 15px}.menu{display:block}.links{display:none;order:3;width:100%;flex-direction:column;gap:0;margin:0}.links.open{display:flex;background:#041329;color:#fff}.links a{padding:11px 4px;border-top:1px solid #17345b;font-size:13px;color:#e5efff}.actions{display:flex;order:4;width:100%}.actions .btn{flex:1}.hero-in{grid-template-columns:1fr;padding:38px 20px 28px}.hero h1{font-size:45px}.hero p{font-size:15px}.visual{min-height:345px}.phone{width:235px}.card{display:none!important}.market{padding:14px}.section,.long-section{padding:45px 20px}.features,.security-in{grid-template-columns:1fr;gap:25px}.grid,.features .grid{grid-template-columns:repeat(2,1fr)}.security-in{padding:40px 20px}.steps-grid,.info-grid{grid-template-columns:1fr 1fr}.cta{margin:25px 15px;padding:23px;flex-direction:column;align-items:flex-start}.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:1/-1}.support-float{right:10px;padding:12px;font-size:12px}}
+    @media(max-width:420px){.hero h1{font-size:39px}.card{display:none!important}.phone{margin-left:30px;width:245px;min-height:490px}.grid,.features .grid,.secgrid,.steps-grid,.info-grid{grid-template-columns:1fr}.foot{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
 <header><nav class="nav">
-  <a class="brand" href="#home"><span class="logo">◔</span>QFS Ledger</a>
+  <a class="brand" href="#home"><span class="logo">Q</span>QFS Ledger</a>
   <button class="menu" id="menu" type="button" aria-expanded="false">☰ Menu</button>
   <div class="links" id="links"><a href="#home">Home</a><a href="#assets">Assets</a><a href="#features">Features</a><a href="#why">Security</a><a href="#faq">FAQ</a></div>
   <div class="actions"><button class="btn outline" type="button" data-auth="login">Log in</button><button class="btn primary" type="button" data-auth="signup">Create account</button></div>
@@ -123,60 +110,46 @@
     <div><div class="eyebrow">Your digital assets. Our priority.</div><h1>Welcome to<br><span class="blue">QFS Ledger</span></h1>
       <p>Your security matters. QFS Ledger is designed with account protection in mind. Use a strong, unique password and never share your login details or recovery information.</p>
       <div class="row"><button class="btn primary" type="button" data-auth="signup">Get Started →</button><a class="btn outline" href="#why">Learn More</a></div>
-      <div class="trust"><div><span>♢</span>Prototype preview</div><div><span>ϟ</span>Mobile friendly</div><div><span>◎</span>Transparent demo</div></div>
+      <div class="trust"><div><span>ϟ</span>Mobile friendly</div><div><span>◎</span>Account access</div></div>
     </div>
-    <div class="visual"><div class="card"><div class="logo">◔</div><strong>QFS Ledger</strong><small>ACCOUNT SECURITY<br>MATTERS</small></div>
-      <div class="phone"><div class="ptop"><span class="logo" style="display:inline-grid;width:23px;height:23px;font-size:12px;vertical-align:middle">◔</span> QFS Ledger</div>
-        <div class="balance-label">Total Balance</div><div class="balance">********</div><div class="green">Crypto Prices</div>
-        <div class="chart"><svg viewBox="0 0 220 60" preserveAspectRatio="none"><polyline points="0,49 20,40 35,44 55,30 72,36 92,24 110,29 127,18 145,24 165,10 182,17 199,4 220,8" fill="none" stroke="#1768ef" stroke-width="2.5" stroke-linecap="round"/></svg></div>
-        <div class="quick"><button type="button" data-demo="Send"><b>↗</b>Send</button><button type="button" data-demo="Receive"><b>↓</b>Receive</button><button type="button" data-demo="Buy crypto"><b>▣</b>Buy</button><button type="button" data-demo="Swap"><b>⇄</b>Swap</button></div>
-        <div class="assets-head" id="assets">My Assets <span class="blue">Crypto Prices</span></div>
-        <div class="asset"><span class="coin">◎</span><span class="asset-name">XLM<small>Stellar Lumens</small></span><span class="amount">********<small>Crypto Prices</small></span></div>
-        <div class="asset"><span class="coin">₿</span><span class="asset-name">BTC<small>Bitcoin</small></span><span class="amount">********<small>Crypto Prices</small></span></div>
-        <div class="asset"><span class="coin">◆</span><span class="asset-name">ETH<small>Ethereum</small></span><span class="amount">********<small>Crypto Prices</small></span></div>
+    <div class="visual"><div class="phone"><div class="phone-status"><span>9:41</span><span>●●●  ▰</span></div><div class="ptop"><span class="logo">Q</span> QFS Ledger</div>
+        <div class="balance-label">Total Balance</div><div class="balance">••••••••</div><div class="green">Your portfolio</div>
+        <div class="quick"><button type="button"><b>↗</b>Send</button><button type="button"><b>↓</b>Receive</button><button type="button"><b>＋</b>Buy</button><button type="button"><b>⇄</b>Swap</button></div>
+        <div class="assets-head" id="assets">Your Assets <span style="color:#62aaff">Overview</span></div>
+        <div class="asset"><span class="coin btc"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/btc.svg" alt="BTC logo" loading="lazy"></span><span class="asset-name">Bitcoin<small>BTC</small></span><span class="amount">••••••</span></div>
+        <div class="asset"><span class="coin eth"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/eth.svg" alt="ETH logo" loading="lazy"></span><span class="asset-name">Ethereum<small>ETH</small></span><span class="amount">••••••</span></div>
+        <div class="asset"><span class="coin bnb"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/bnb.svg" alt="BNB logo" loading="lazy"></span><span class="asset-name">BNB<small>BNB</small></span><span class="amount">••••••</span></div>
+        <div class="asset"><span class="coin xrp"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/xrp.svg" alt="XRP logo" loading="lazy"></span><span class="asset-name">XRP<small>XRP Ledger</small></span><span class="amount">••••••</span></div>
+        <div class="asset"><span class="coin xlm"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/xlm.svg" alt="XLM logo" loading="lazy"></span><span class="asset-name">Stellar<small>XLM</small></span><span class="amount">••••••</span></div>
+        <div class="asset"><span class="coin trx"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/trx.svg" alt="TRX logo" loading="lazy"></span><span class="asset-name">Tron<small>TRX</small></span><span class="amount">••••••</span></div>
+        <div class="asset"><span class="coin usdt"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/usdt.svg" alt="USDT logo" loading="lazy"></span><span class="asset-name">Tether<small>USDT</small></span><span class="amount">••••••</span></div>
       </div>
     </div>
   </div></section>
-  <section class="market"><div class="market-title">⊕ &nbsp; Crypto Prices</div><div class="ticker"><span class="coin">◎</span><small>XLM</small><strong>$0.2563</strong><em>Crypto Prices</em></div><div class="ticker"><span class="coin">₿</span><small>BTC</small><strong>$63,482.12</strong><em>Crypto Prices</em></div><div class="ticker"><span class="coin">◆</span><small>ETH</small><strong>$3,246.17</strong><em>Crypto Prices</em></div><div class="ticker"><span class="coin">✕</span><small>XRP</small><strong>$0.4867</strong><em>Crypto Prices</em></div></section>
-  <section class="section features" id="features"><div><div class="eyebrow">The QFS Ledger concept</div><h2>Everything in<br><span class="blue">One Place</span></h2><p>Explore a sample layout for digital asset information. Real account and transaction functions require secure backend implementation and independent testing.</p><button class="btn primary" type="button" data-auth="signup">Create account</button></div>
-    <div class="grid"><div class="feature" data-demo="Buy Crypto"><div class="icon">▣</div><h3>Buy Crypto</h3><p>Preview where buying tools could appear.</p></div><div class="feature" data-demo="Send and Receive"><div class="icon">⇄</div><h3>Send &amp; Receive</h3><p>Explore a sample transfer interface.</p></div><div class="feature" data-demo="Swap"><div class="icon">⇆</div><h3>Swap</h3><p>Preview exchanging asset layouts.</p></div><div class="feature" data-demo="Trade"><div class="icon">↗</div><h3>Trade</h3><p>Learn about trading tool layouts.</p></div><div class="feature"><div class="icon">▱</div><h3>Portfolio</h3><p>See an example portfolio design.</p></div><div class="feature" data-demo="Transactions"><div class="icon">▤</div><h3>Transactions</h3><p>Preview where history could appear.</p></div></div>
+  <section class="market"><div class="market-title">Supported assets</div><div class="ticker"><span class="coin btc"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/btc.svg" alt="BTC logo" loading="lazy"></span><small>BTC</small><strong>Bitcoin</strong></div><div class="ticker"><span class="coin eth"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/eth.svg" alt="ETH logo" loading="lazy"></span><small>ETH</small><strong>Ethereum</strong></div><div class="ticker"><span class="coin bnb"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/bnb.svg" alt="BNB logo" loading="lazy"></span><small>BNB</small><strong>BNB</strong></div><div class="ticker"><span class="coin xrp"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/xrp.svg" alt="XRP logo" loading="lazy"></span><small>XRP</small><strong>XRP</strong></div><div class="ticker"><span class="coin xlm"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/xlm.svg" alt="XLM logo" loading="lazy"></span><small>XLM</small><strong>Stellar</strong></div><div class="ticker"><span class="coin trx"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/trx.svg" alt="TRX logo" loading="lazy"></span><small>TRX</small><strong>Tron</strong></div><div class="ticker"><span class="coin usdt"><img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/svg/color/usdt.svg" alt="USDT logo" loading="lazy"></span><small>USDT</small><strong>Tether</strong></div></section>
+  <section class="section features" id="features"><div><div class="eyebrow">Everything you need</div><h2>Take Control of Your Crypto</h2><p>Simple tools. Clear information. Account access in one place.</p></div>
+    <div class="grid"><div class="feature"><div class="icon">♢</div><h3>Account Security</h3><p>Access your account with your registered email and password.</p></div><div class="feature"><div class="icon">ϟ</div><h3>Simple Experience</h3><p>A clean interface designed for everyday use.</p></div><div class="feature"><div class="icon">◎</div><h3>Multi-Asset Display</h3><p>BTC, ETH, BNB, XRP, XLM, TRX, USDT and more.</p></div><div class="feature"><div class="icon">▣</div><h3>On Your Device</h3><p>Access your account from your phone or computer.</p></div><div class="feature"><div class="icon">♧</div><h3>Support</h3><p>Contact the QFS Ledger support team when you need help.</p></div></div>
   </section>
-  <section class="security" id="why"><div class="security-in"><div><div class="eyebrow">Why security matters</div><h2>Designed with<br>transparency in mind</h2><p>A real wallet needs tested security, proper key handling and verified transaction flows before real assets should ever be used.</p></div><div class="secgrid"><div class="secitem"><div class="icon">✓</div><div><h3>Security first</h3><p>Security must be implemented and tested before launch.</p></div></div><div class="secitem"><div class="icon">◎</div><div><h3>Transparent preview</h3><p>Balances and prices shown here are illustrative.</p></div></div><div class="secitem"><div class="icon">♧</div><div><h3>Help &amp; support</h3><p>Send a message to the QFS Ledger support inbox.</p></div></div><div class="secitem"><div class="icon">▤</div><div><h3>Account access</h3><p>Registration uses Supabase Auth when configured.</p></div></div></div></div></section>
-  <section class="long-section soft-blue"><div class="long-heading"><div class="eyebrow">Getting started</div><h2>Explore the experience</h2><p>This website remains a prototype. Account registration is separate from any wallet or blockchain functionality.</p></div><div class="steps-grid"><article class="step-card"><h3>01. Explore</h3><p>Browse the sample dashboard and page sections.</p></article><article class="step-card"><h3>02. Register</h3><p>Test the account form with an email address you control and a unique password.</p></article><article class="step-card"><h3>03. Stay safe</h3><p>Never enter a wallet recovery phrase or private key on this prototype.</p></article></div></section>
+  <section class="security" id="why"><div class="security-in"><div><div class="eyebrow">QFS Ledger security</div><h2>Your Security. Your Priority.</h2><p>Protect your account with a strong, unique password. Never share your password, private keys or recovery phrase.</p></div><div class="secgrid"><div class="secitem"><div class="icon">♙</div><div><h3>Account protection</h3><p>Keep your sign-in details private and secure.</p></div></div><div class="secitem"><div class="icon">⌑</div><div><h3>Private access</h3><p>Your account is accessed through your own sign-in.</p></div></div><div class="secitem"><div class="icon">♧</div><div><h3>Support when needed</h3><p>Reach the QFS Ledger support team for assistance.</p></div></div></div></div></section>
+  <section class="long-section soft-blue"><div class="long-heading"><div class="eyebrow">Getting started</div><h2>Welcome to QFS Ledger</h2><p>Create your account to access your personal account area.</p></div><div class="steps-grid"><article class="step-card"><h3>01. Create account</h3><p>Register with your email address and a secure password.</p></article><article class="step-card"><h3>02. Confirm email</h3><p>Follow the confirmation message if email verification is required.</p></article><article class="step-card"><h3>03. Log in</h3><p>Access your QFS Ledger account.</p></article></div></section>
   <section class="long-section" id="faq"><div class="long-heading"><div class="eyebrow">Need to know</div><h2>Frequently asked questions</h2></div><div class="faq-list">
-    <details><summary>Is this a live cryptocurrency wallet?</summary><p>No. This is a front-end website prototype. It does not hold private keys, connect to a blockchain or process cryptocurrency transactions.</p></details>
-    <details><summary>Are the balances and prices real?</summary><p>No. All balances, chart values and prices shown are sample content only.</p></details>
-    <details><summary>What does account creation do?</summary><p>If Supabase Authentication is configured, it can create an authentication account. That does not create a crypto wallet or enable transactions.</p></details>
+    <details><summary>How do I access my account?</summary><p>Create an account with your email address, confirm your email if requested, then log in.</p></details>
+    <details><summary>How do I protect my account?</summary><p>Use a strong, unique password and never share your password, private keys, or wallet recovery phrase.</p></details>
+    
   </div></section>
-  <section class="cta"><div><h2>Explore QFS Ledger</h2><p>Prototype website — demo data only; no live wallet connection.</p></div><button class="btn" type="button" data-auth="signup">Create account →</button></section>
+  <section class="cta"><div><h2>Explore QFS Ledger</h2><p>Access your QFS Ledger account.</p></div><button class="btn" type="button" data-auth="signup">Create account →</button></section>
 </main>
-<footer><div class="foot"><div><a class="brand" href="#home"><span class="logo">◔</span>QFS Ledger</a><p>A clean interface concept for a digital asset platform.</p></div><div><h4>Product</h4><a href="#assets">Assets</a><a href="#features">Features</a></div><div><h4>Company</h4><a href="#why">Security</a><a href="#faq">Platform information</a></div><div><h4>Support</h4><p>Use “Need help? Contact us” to send a message to support.</p></div></div><div class="copy"><span>© 2026 QFS Ledger. Prototype website.</span><span>Demo data only · No live wallet connection</span></div></footer>
+<footer><div class="foot"><div><a class="brand" href="#home"><span class="logo">Q</span>QFS Ledger</a><p>Your digital assets. Our priority.</p></div><div><h4>Product</h4><a href="#assets">Assets</a><a href="#features">Features</a></div><div><h4>Company</h4><a href="#why">Security</a><a href="#faq">Platform information</a></div><div><h4>Support</h4><p>Contact our support team for assistance.</p></div></div><div class="copy"><span>© 2026 QFS Ledger.</span></div></footer>
 <button class="btn primary support-float" type="button" id="sendSupportMessage">Need help? Contact us</button>
-<div class="support-overlay" id="supportOverlay" role="dialog" aria-modal="true" aria-labelledby="supportTitle">
-  <div class="support-box">
-    <button class="support-close" type="button" id="supportClose" aria-label="Close support form">&times;</button>
-    <h2 id="supportTitle">Contact QFS Ledger Support</h2>
-    <p>Tell us how we can help. Your message will be sent to our support inbox.</p>
-    <form id="supportForm">
-      <label for="supportMessage">Your message</label>
-      <textarea id="supportMessage" name="message" maxlength="5000" required placeholder="Type your message here..."></textarea>
-      <div class="support-actions">
-        <button class="support-cancel" type="button" id="supportCancel">Cancel</button>
-        <button class="btn primary" type="submit" id="supportSubmit">Send message</button>
-      </div>
-    </form>
-  </div>
-</div>
 <div class="notice" id="notice" role="status" aria-live="polite"></div>
 <div class="auth-overlay" id="authOverlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
   <div class="auth-box"><button class="auth-close" id="authClose" type="button" aria-label="Close">×</button>
-    <a class="brand" href="#home"><span class="logo">◔</span>QFS Ledger</a>
-    <h2 id="authTitle">Create your QFS Ledger account</h2><p id="authIntro">Use a test account for this prototype.</p>
+    <a class="brand" href="#home"><span class="logo">Q</span>QFS Ledger</a>
+    <h2 id="authTitle">Create your QFS Ledger account</h2><p id="authIntro">Use your email address to create an account.</p>
     <form id="authForm">
       <div id="nameField"><label for="authName">Full name</label><input id="authName" name="fullName" autocomplete="name" placeholder="Your name"></div>
       <label for="authEmail">Email address</label><input id="authEmail" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
       <label for="authPassword">Password</label><input id="authPassword" name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="At least 8 characters">
-      <div class="auth-warning">Prototype only. Use a unique test password. Never enter a cryptocurrency wallet password, recovery phrase, or private key here.</div>
       <button class="btn primary full" id="authSubmit" type="submit">Create account</button>
     </form>
     <button class="auth-switch" id="authSwitch" type="button">Already have an account? Log in</button>
@@ -215,7 +188,7 @@
   let supabaseClient = null;
   try {
     if (window.supabase && typeof window.supabase.createClient === 'function') {
-      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, storage: window.localStorage } });
     } else {
       console.error('Supabase library did not load.');
     }
@@ -237,7 +210,7 @@
     title.textContent = mode === 'signup' ? 'Create your QFS Ledger account' : 'Log in to QFS Ledger';
     intro.textContent = mode === 'signup'
       ? 'After registration, check your email if confirmation is required.'
-      : 'Log in using the email and password for your test account.';
+      : 'Log in using your registered email address and password.';
     nameField.style.display = mode === 'signup' ? 'block' : 'none';
     document.getElementById('authPassword').autocomplete = mode === 'signup' ? 'new-password' : 'current-password';
     submitButton.textContent = mode === 'signup' ? 'Create account' : 'Log in';
@@ -247,11 +220,6 @@
 
   document.querySelectorAll('[data-auth]').forEach(button => {
     button.addEventListener('click', () => openAuth(button.dataset.auth));
-  });
-  document.querySelectorAll('[data-demo]').forEach(button => {
-    button.addEventListener('click', () => {
-      showNotice(button.dataset.demo + ' is a visual preview only; no real wallet transaction is connected.');
-    });
   });
 
   document.getElementById('authClose').addEventListener('click', () => overlay.classList.remove('open'));
@@ -298,13 +266,13 @@
 
       if (mode === 'signup') {
         if (result.data && result.data.session) {
-          showNotice('Account created and signed in.');
+          window.location.assign('https://chidaluseniorman2020-source.github.io/Qfsledger/dashboard.html');
         } else {
           showNotice('Registration submitted. Check your email to confirm your account.');
         }
       } else {
         overlay.classList.remove('open');
-        showNotice('Login successful.');
+        window.location.assign('https://chidaluseniorman2020-source.github.io/Qfsledger/dashboard.html');
       }
     } catch (error) {
       console.error('Authentication error:', error);
@@ -316,73 +284,10 @@
     }
   });
 
-  const supportOverlay = document.getElementById('supportOverlay');
-  const supportForm = document.getElementById('supportForm');
-  const supportMessage = document.getElementById('supportMessage');
-  const supportSubmit = document.getElementById('supportSubmit');
-
-  function closeSupportForm() {
-    supportOverlay.classList.remove('open');
-  }
-
   document.getElementById('sendSupportMessage').addEventListener('click', () => {
-    supportOverlay.classList.add('open');
-    supportMessage.focus();
+    showNotice('Support messaging is not connected yet. Please check back later.');
   });
 
-  document.getElementById('supportClose').addEventListener('click', closeSupportForm);
-  document.getElementById('supportCancel').addEventListener('click', closeSupportForm);
-  supportOverlay.addEventListener('click', event => {
-    if (event.target === supportOverlay) closeSupportForm();
-  });
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && supportOverlay.classList.contains('open')) {
-      closeSupportForm();
-    }
-  });
-
-  supportForm.addEventListener('submit', async event => {
-    event.preventDefault();
-    const message = supportMessage.value.trim();
-    if (!message) {
-      supportMessage.focus();
-      return;
-    }
-
-    supportSubmit.disabled = true;
-    supportSubmit.textContent = 'Sending...';
-
-    try {
-      const response = await fetch(
-        `${SUPABASE_URL}/functions/v1/send-support-message`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': SUPABASE_PUBLISHABLE_KEY
-          },
-          body: JSON.stringify({ message })
-        }
-      );
-
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(result.error || 'Your message could not be sent. Please try again.');
-      }
-
-      supportForm.reset();
-      closeSupportForm();
-      showNotice('Your support message has been sent successfully.');
-    } catch (error) {
-      console.error('Support message error:', error);
-      showNotice(error.message || 'Unable to send your message. Please try again.');
-    } finally {
-      supportSubmit.disabled = false;
-      supportSubmit.textContent = 'Send message';
-    }
-  });
-
-  // Keep the prototype explicit: the wallet-link control does not request wallet secrets.
   window.addEventListener('error', event => {
     console.error('Page error:', event.message);
   });
