@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fff">
-  <title> Ledger — Your Digital Assets</title>
+  <title>QFS Ledger — Your Digital Assets</title>
   <style>
     :root{--blue:#0878ff;--navy:#071a35;--muted:#617695;--line:#dce7f5;--pale:#f4f8ff}
     *{box-sizing:border-box}
@@ -142,7 +142,7 @@
   <section class="cta"><div><h2>Explore QFS Ledger</h2><p>Access your QFS Ledger account.</p></div><button class="btn" type="button" data-auth="signup">Create account →</button></section>
 </main>
 <footer><div class="foot"><div><a class="brand" href="#home"><span class="logo">Q</span>QFS Ledger</a><p>Your digital assets. Our priority.</p></div><div><h4>Product</h4><a href="#assets">Assets</a><a href="#features">Features</a></div><div><h4>Company</h4><a href="#why">Security</a><a href="#faq">Platform information</a></div><div><h4>Support</h4><p>Contact our support team for assistance.</p></div></div><div class="copy"><span>© 2026 QFS Ledger.</span></div></footer>
-<button class="btn primary support-float" type="button" id="sendSupportMessage">Need help? Contact us</button>
+<button class="btn primary support-float" type="button" id="sendSupportMessage" onclick="document.getElementById('supportOverlay').classList.add('open')">Need help? Contact us</button>
 <div class="support-overlay" id="supportOverlay" role="dialog" aria-modal="true" aria-labelledby="supportTitle"><div class="support-box"><button class="support-close" type="button" id="supportClose" aria-label="Close support form">&times;</button><h2 id="supportTitle">Contact QFS Ledger Support</h2><p>Tell us how we can help. Your message will be sent to our support inbox.</p><form id="supportForm"><label for="supportMessage">Your message</label><textarea id="supportMessage" name="message" maxlength="5000" required placeholder="Type your message here..."></textarea><div class="support-actions"><button class="support-cancel" type="button" id="supportCancel">Cancel</button><button class="btn primary" type="submit" id="supportSubmit">Send message</button></div></form></div></div>
 <div class="notice" id="notice" role="status" aria-live="polite"></div>
 <div class="auth-overlay" id="authOverlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
