@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QFS Ledger — Admin Dashboard</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f2f5fa;color:#14233b;font-family:Arial,sans-serif}
+header{background:#10284c;color:white;padding:20px}
+header h2{margin:0}
+header p{margin:6px 0 0;color:#cbd8ec;font-size:13px}
+main{max-width:1000px;margin:22px auto;padding:0 14px}
+.card{background:white;border:1px solid #e1e7f0;border-radius:14px;padding:18px;margin-bottom:18px}
+h3{margin-top:0}
+label{display:block;font-weight:bold;margin:14px 0 6px}
+input,select{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:8px;font-size:16px;background:white}
+button{border:0;border-radius:8px;padding:12px 16px;background:#0758e8;color:white;font-weight:bold;margin:8px 5px 0 0;cursor:pointer}
+button:disabled{opacity:.5}
+.reject{background:#b42318}
+.secondary{background:#e8eef8;color:#18345c}
+.hidden{display:none}
+.muted{color:#64748b;font-size:13px;overflow-wrap:anywhere}
+.status{white-space:pre-wrap;margin-top:12px;font-size:14px}
+.item{border:1px solid #e1e7f0;border-radius:10px;padding:14px;margin:12px 0;overflow-wrap:anywhere}
+.item p{margin:7px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid #e5eaf1}
+.tablewrap{overflow-x:auto}
+.badge{display:inline-block;background:#fff3d6;color:#805500;padding:5px 9px;border-radius:20px;font-size:12px}
+.section-title{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>QFS Ledger</h2>
+<p>Private Administrator Dashboard</p>
+</header>
+
+<main>
+
+<section class="card" id="loginSection">
+<h3>Administrator Login</h3>
+<p class="muted">Sign in with your authorised QFS Ledger administrator account.</p>
+
+<form id="loginForm">
+<label>Email address</label>
+<input id="email" type="email" autocomplete="username" required>
+
+<label>Password</label>
+<input id="password" type="password" autocomplete="current-password" required>
+
+<button id="loginButton" type="submit">Log in</button>
+</form>
+
+<div id="loginStatus" class="status" role="status"></div>
+</section>
+
+<section id="dashboard" class="hidden">
+
+<div class="card">
+<div class="section-title">
+<div>
+<h3>Welcome, Administrator</h3>
+<p class="muted" id="adminEmail"></p>
+</div>
+<button class="secondary" id="logoutButton">Log out</button>
+</div>
+<div id="mainStatus" class="status"></div>
+</div>
+
+<div class="card">
+<div class="section-title">
+<h3>Pending Deposits</h3>
+<button id="refreshDeposits">Refresh</button>
+</div>
+<div id="deposits">Loading deposits...</div>
+</div>
+
+<div class="card">
+<div class="section-title">
+<h3>Customer Balances</h3>
+<button id="refreshUsers">Refresh</button>
+</div>
+<div id="users">Loading customers...</div>
+</div>
+
+<div class="card">
+<h3>Manual Customer Credit</h3>
+<p class="muted">Use this only after independently verifying the customer's payment.</p>
+
+<form id="creditForm">
+
+<label>Select Customer</label>
+<select id="customerSelect" required>
+<option value="">Load customers first</option>
+</select>
+
+<label>Cryptocurrency</label>
+<select id="currency" required>
+<option value="BTC">Bitcoin (BTC)</option>
+<option value="ETH">Ethereum (ETH)</option>
+<option value="BNB">BNB</option>
+<option value="XLM">Stellar (XLM)</option>
+<option value="XRP">XRP</option>
+<option value="TRX">Tron (TRX)</option>
+<option value="USDT">USDT</option>
+</select>
+
+<label>Amount</label>
+<input id="amount" type="number" min="0.00000001" step="any" required>
+
+<label>Payment verification note</label>
+<input id="note" type="text" maxlength="500" placeholder="Example: Bank transfer verified" required>
+
+<button id="creditButton" type="submit">Credit Customer Balance</button>
+
+</form>
+
+<div id="creditStatus" class="status" role="status"></div>
+</div>
+
+</section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+(() => {
+
+const SUPABASE_URL = "https://yjtwfcnehsmtzzedzemi.supabase.co";
+const SUPABASE_KEY = "sb_publishable_0ITt5LrH8TkS9ABvgGKHyA_uvwREhGg";
+const ADMIN_ID = "6d765d99-a7fa-4241-aac6-85aa7e031c35";
+
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const $ = id => document.getElementById(id);
+
+let customers = [];
+
+function message(id,text,bad=false){
+  $(id).textContent = text;
+  $(id).style.color = bad ? "#b42318" : "#166534";
+}
+
+function element(tag,text,className){
+  const node=document.createElement(tag);
+  if(text!==undefined) node.textContent=text;
+  if(className) node.className=className;
+  return node;
+}
+
+async function loadDeposits(){
+
+  $("deposits").textContent="Loading deposits...";
+
+  const {data,error}=await db.rpc("admin_list_deposits");
+
+  if(error){
+    $("deposits").textContent="";
+    message("mainStatus","Could not load deposits: "+error.message,true);
+    return;
+  }
+
+  $("deposits").textContent="";
+
+  if(!data || data.length===0){
+    $("deposits").textContent="No pending deposits.";
+    return;
+  }
+
+  data.forEach(d=>{
+
+    const box=element("div",undefined,"item");
+    const title=element("h3","Deposit #"+d.id);
+    const badge=element("span","PENDING","badge");
+
+    box.append(title,badge);
+    box.append(element("p","Customer: "+(d.user_email||"Email unavailable")));
+    box.append(element("p","Amount: "+d.amount+" "+d.currency));
+    box.append(element("p","Submitted: "+(d.created_at||"Not available")));
+    box.append(element("p","User ID: "+d.user_id));
+
+    const approve=element("button","Approve & Credit");
+    const reject=element("button","Reject Deposit","reject");
+
+    approve.addEventListener("click",async()=>{
+
+      if(!confirm("Have you independently verified this payment? Approve and credit this deposit?")) return;
+
+      approve.disabled=true;
+      reject.disabled=true;
+
+      const {error}=await db.rpc("approve_deposit",{
+        p_deposit_id:d.id
+      });
+
+      if(error){
+        alert("Approval failed: "+error.message);
+        approve.disabled=false;
+        reject.disabled=false;
+        return;
+      }
+
+      alert("Deposit approved and customer balance credited.");
+      await refreshAll();
+    });
+
+    reject.addEventListener("click",async()=>{
+
+      if(!confirm("Are you sure you want to reject this deposit?")) return;
+
+      approve.disabled=true;
+      reject.disabled=true;
+
+      const {error}=await db.rpc("reject_deposit",{
+        p_deposit_id:d.id
+      });
+
+      if(error){
+        alert("Rejection failed: "+error.message);
+        approve.disabled=false;
+        reject.disabled=false;
+        return;
+      }
+
+      alert("Deposit rejected.");
+      await refreshAll();
+    });
+
+    box.append(approve,reject);
+    $("deposits").appendChild(box);
+
+  });
+
+}
+
+async function loadUsers(){
+
+  $("users").textContent="Loading customers...";
+
+  const {data,error}=await db.rpc("admin_list_users");
+
+  if(error){
+    $("users").textContent="";
+    message("mainStatus","Could not load customers: "+error.message,true);
+    return;
+  }
+
+  customers=data||[];
+
+  $("users").textContent="";
+
+  const select=$("customerSelect");
+  select.replaceChildren(element("option","Select a customer"));
+  select.firstChild.value="";
+
+  const uniqueUsers=new Map();
+
+  customers.forEach(u=>{
+    if(!uniqueUsers.has(u.user_id)){
+      uniqueUsers.set(u.user_id,u);
+    }
+  });
+
+  uniqueUsers.forEach(u=>{
+    const option=element("option",u.email||u.user_id);
+    option.value=u.user_id;
+    select.appendChild(option);
+  });
+
+  if(customers.length===0){
+    $("users").textContent="No registered customers found.";
+    return;
+  }
+
+  const wrapper=element("div",undefined,"tablewrap");
+  const table=element("table");
+  const head=element("thead");
+  const row=element("tr");
+
+  ["Customer","Currency","Balance"].forEach(label=>{
+    row.appendChild(element("th",label));
+  });
+
+  head.appendChild(row);
+  table.appendChild(head);
+
+  const body=element("tbody");
+
+  customers.forEach(u=>{
+    const tr=element("tr");
+    tr.appendChild(element("td",u.email||u.user_id));
+    tr.appendChild(element("td",u.currency||"-"));
+    tr.appendChild(element("td",String(u.balance??0)));
+    body.appendChild(tr);
+  });
+
+  table.appendChild(body);
+  wrapper.appendChild(table);
+  $("users").appendChild(wrapper);
+
+}
+
+async function refreshAll(){
+  message("mainStatus","Refreshing dashboard...");
+  await loadDeposits();
+  await loadUsers();
+  message("mainStatus","Dashboard refreshed.");
+}
+
+async function showDashboard(user){
+
+  $("loginSection").classList.add("hidden");
+  $("dashboard").classList.remove("hidden");
+  $("adminEmail").textContent="Signed in as "+(user.email||"Administrator");
+
+  await refreshAll();
+
+}
+
+$("loginForm").addEventListener("submit",async e=>{
+
+  e.preventDefault();
+
+  const btn=$("loginButton");
+  btn.disabled=true;
+  message("loginStatus","Signing in...");
+
+  const {data,error}=await db.auth.signInWithPassword({
+    email:$("email").value.trim(),
+    password:$("password").value
+  });
+
+  btn.disabled=false;
+
+  if(error){
+    message("loginStatus","Login failed: "+error.message,true);
+    return;
+  }
+
+  if(!data.user || data.user.id!==ADMIN_ID){
+
+    await db.auth.signOut();
+    message("loginStatus","Access denied. This account is not an authorised administrator.",true);
+    return;
+
+  }
+
+  await showDashboard(data.user);
+
+});
+
+$("refreshDeposits").addEventListener("click",loadDeposits);
+$("refreshUsers").addEventListener("click",loadUsers);
+
+$("logoutButton").addEventListener("click",async()=>{
+
+  await db.auth.signOut();
+
+  $("dashboard").classList.add("hidden");
+  $("loginSection").classList.remove("hidden");
+  $("loginForm").reset();
+
+  customers=[];
+  $("deposits").textContent="";
+  $("users").textContent="";
+  message("loginStatus","You have logged out.");
+
+});
+
+$("creditForm").addEventListener("submit",async e=>{
+
+  e.preventDefault();
+
+  const userId=$("customerSelect").value;
+  const currency=$("currency").value;
+  const amount=Number($("amount").value);
+  const note=$("note").value.trim();
+
+  if(!userId){
+    message("creditStatus","Please select a customer.",true);
+    return;
+  }
+
+  if(!Number.isFinite(amount)||amount<=0){
+    message("creditStatus","Enter a valid amount greater than zero.",true);
+    return;
+  }
+
+  if(!note){
+    message("creditStatus","Enter a payment verification note.",true);
+    return;
+  }
+
+  if(!confirm("Confirm manual credit of "+amount+" "+currency+" to this customer?")) return;
+
+  const btn=$("creditButton");
+  btn.disabled=true;
+  message("creditStatus","Processing credit...");
+
+  const {data,error}=await db.rpc("admin_manual_credit",{
+    p_user_id:userId,
+    p_currency:currency,
+    p_amount:amount,
+    p_note:note
+  });
+
+  btn.disabled=false;
+
+  if(error){
+    message("creditStatus","Credit failed: "+error.message,true);
+    return;
+  }
+
+  message("creditStatus","Customer balance credited successfully.");
+
+  $("amount").value="";
+  $("note").value="";
+
+  await loadUsers();
+
+});
+
+async function restoreSession(){
+
+  const {data,error}=await db.auth.getSession();
+
+  if(error) return;
+
+  const user=data.session?.user;
+
+  if(user && user.id===ADMIN_ID){
+    await showDashboard(user);
+  }else if(user){
+    await db.auth.signOut();
+  }
+
+}
+
+restoreSession();
+
+})();
+</script>
+
+</body>
+  </html>
