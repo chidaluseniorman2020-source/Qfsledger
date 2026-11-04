@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10284c">
+<title>QFS Ledger — Admin Support Inbox</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f2f5fa;color:#14233b;font-family:Arial,sans-serif}
+header{background:#10284c;color:#fff;padding:18px}
+header h2{margin:0}
+header p{margin:6px 0 0;color:#cbd8ec;font-size:13px}
+main{max-width:1100px;margin:22px auto;padding:0 14px}
+.card{background:#fff;border:1px solid #e1e7f0;border-radius:14px;padding:18px;margin-bottom:16px}
+h3{margin:0 0 12px}
+label{display:block;font-weight:bold;margin:14px 0 6px}
+input,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font:16px Arial;background:#fff}
+textarea{min-height:110px;resize:vertical}
+button{border:0;border-radius:8px;padding:12px 16px;background:#0758e8;color:#fff;font-weight:bold;margin:8px 6px 0 0;cursor:pointer}
+button:disabled{opacity:.55;cursor:not-allowed}
+.secondary{background:#e8eef8;color:#18345c}
+.hidden{display:none!important}
+.muted{color:#64748b;font-size:13px;overflow-wrap:anywhere}
+.status{white-space:pre-wrap;margin-top:12px;font-size:14px}
+.layout{display:grid;grid-template-columns:minmax(260px,360px) minmax(0,1fr);gap:16px;align-items:start}
+.message-list{max-height:70vh;overflow:auto}
+.message-card{border:1px solid #dce5f0;border-radius:10px;padding:13px;margin:10px 0;cursor:pointer;background:#fff}
+.message-card.selected{border:2px solid #0758e8;background:#f4f8ff}
+.message-card p{margin:6px 0;overflow-wrap:anywhere}
+.badge{display:inline-block;padding:4px 8px;border-radius:20px;background:#fff3d6;color:#805500;font-size:11px}
+.badge.replied{background:#e5f6eb;color:#166534}
+.conversation{border:1px solid #e1e7f0;border-radius:10px;padding:12px;margin:10px 0;overflow-wrap:anywhere;white-space:pre-wrap}
+.customer{background:#f4f7fb}
+.admin{background:#eaf2ff}
+.conversation small{display:block;color:#64748b;margin-bottom:7px}
+.topline{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+@media(max-width:720px){.layout{grid-template-columns:1fr}.message-list{max-height:45vh}}
+</style>
+</head>
+<body>
+<header>
+  <h2>QFS Ledger</h2>
+  <p>Private Administrator Support Inbox</p>
+</header>
+
+<main>
+  <section class="card" id="loginSection">
+    <h3>Administrator Login</h3>
+    <p class="muted">Sign in with your authorised QFS Ledger administrator account.</p>
+    <form id="loginForm">
+      <label for="email">Email address</label>
+      <input id="email" type="email" autocomplete="username" required>
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required>
+      <button id="loginButton" type="submit">Log in</button>
+    </form>
+    <div id="loginStatus" class="status" role="status"></div>
+  </section>
+
+  <section id="inboxSection" class="hidden">
+    <div class="card topline">
+      <div>
+        <h3 style="margin:0">Support Inbox</h3>
+        <p class="muted" id="signedInAs" style="margin:6px 0 0"></p>
+      </div>
+      <div>
+        <button class="secondary" id="refreshButton" type="button">Refresh messages</button>
+        <button class="secondary" id="logoutButton" type="button">Log out</button>
+      </div>
+    </div>
+    <div id="pageStatus" class="status" role="status"></div>
+
+    <div class="layout">
+      <section class="card">
+        <div class="topline">
+          <h3 style="margin:0">Customer messages</h3>
+          <span class="muted" id="messageCount"></span>
+        </div>
+        <div id="messageList" class="message-list">Loading messages...</div>
+      </section>
+
+      <section class="card">
+        <h3>Conversation</h3>
+        <div id="emptyConversation" class="muted">Select a customer message to read and reply.</div>
+        <div id="conversationHeader" class="hidden">
+          <p><strong id="subjectText"></strong></p>
+          <p class="muted" id="customerDetails"></p>
+        </div>
+        <div id="conversationMessages"></div>
+        <form id="replyForm" class="hidden">
+          <label for="replyText">Your reply</label>
+          <textarea id="replyText" maxlength="5000" placeholder="Write your reply to the customer..." required></textarea>
+          <button id="sendReplyButton" type="submit">Send reply</button>
+        </form>
+        <div id="conversationStatus" class="status" role="status"></div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+  const SUPABASE_URL = "https://yjtwfcnehsmtzzedzemi.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_0ITt5LrH8TkS9ABvgGKHyA_uvwREhGg";
+  const ADMIN_ID = "6d765d99-a7fa-4241-aac6-85aa7e031c35";
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const $ = id => document.getElementById(id);
+
+  let messages = [];
+  let selectedMessage = null;
+
+  function status(id, text, bad=false) {
+    $(id).textContent = text || "";
+    $(id).style.color = bad ? "#b42318" : "#166534";
+  }
+
+  function safeText(value, fallback="") {
+    return value === null || value === undefined || value === "" ? fallback : String(value);
+  }
+
+  function dateText(value) {
+    if (!value) return "Date unavailable";
+    const d = new Date(value);
+    return Number.isNaN(d.getTime()) ? String(value) : d.toLocaleString();
+  }
+
+  function getMessageArray(data) {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.messages)) return data.messages;
+    if (Array.isArray(data?.data)) return data.data;
+    return [];
+  }
+
+  function getReplyArray(data) {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.replies)) return data.replies;
+    if (Array.isArray(data?.messages)) return data.messages;
+    if (Array.isArray(data?.data)) return data.data;
+    return [];
+  }
+
+  async function invokeSupport(body) {
+    const { data, error } = await db.functions.invoke("send-support-message", { body });
+    if (error) throw error;
+    if (data?.error) throw new Error(data.error);
+    return data;
+  }
+
+  function renderList() {
+    const list = $("messageList");
+    list.replaceChildren();
+    $("messageCount").textContent = messages.length + " total";
+
+    if (!messages.length) {
+      list.textContent = "No support messages yet.";
+      return;
+    }
+
+    messages.forEach(msg => {
+      const card = document.createElement("div");
+      card.className = "message-card" + (selectedMessage?.id === msg.id ? " selected" : "");
+      const heading = document.createElement("strong");
+      heading.textContent = safeText(msg.subject, "Support request");
+      const badge = document.createElement("span");
+      badge.className = "badge" + (String(msg.status || "").toLowerCase().includes("reply") ? " replied" : "");
+      badge.textContent = safeText(msg.status, "Pending");
+      const customer = document.createElement("p");
+      customer.textContent = safeText(msg.customer_email || msg.customer_name, "Customer");
+      const preview = document.createElement("p");
+      preview.className = "muted";
+      preview.textContent = safeText(msg.message, "").slice(0, 110);
+      const date = document.createElement("p");
+      date.className = "muted";
+      date.textContent = dateText(msg.created_at);
+      card.append(heading, document.createTextNode(" "), badge, customer, preview, date);
+      card.addEventListener("click", () => openConversation(msg));
+      list.appendChild(card);
+    });
+  }
+
+  async function loadMessages() {
+    $("messageList").textContent = "Loading messages...";
+    status("pageStatus", "Loading customer messages...");
+    try {
+      const data = await invokeSupport({ action: "admin_list" });
+      messages = getMessageArray(data);
+      messages.sort((a,b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+      renderList();
+      status("pageStatus", "Inbox refreshed.");
+      if (selectedMessage) {
+        const stillExists = messages.find(m => m.id === selectedMessage.id);
+        if (stillExists) await openConversation(stillExists, false);
+        else clearConversation();
+      }
+    } catch (err) {
+      $("messageList").textContent = "Could not load messages.";
+      status("pageStatus", "Inbox error: " + (err.message || String(err)), true);
+    }
+  }
+
+  function clearConversation() {
+    selectedMessage = null;
+    $("emptyConversation").classList.remove("hidden");
+    $("conversationHeader").classList.add("hidden");
+    $("conversationMessages").replaceChildren();
+    $("replyForm").classList.add("hidden");
+    $("conversationStatus").textContent = "";
+    renderList();
+  }
+
+  function addConversationBubble(role, text, date, kind) {
+    const bubble = document.createElement("div");
+    bubble.className = "conversation " + kind;
+    const label = document.createElement("small");
+    label.textContent = role + " · " + dateText(date);
+    const content = document.createElement("div");
+    content.textContent = safeText(text, "(No message text)");
+    bubble.append(label, content);
+    $("conversationMessages").appendChild(bubble);
+  }
+
+  async function openConversation(msg, showLoading=true) {
+    selectedMessage = msg;
+    renderList();
+    $("emptyConversation").classList.add("hidden");
+    $("conversationHeader").classList.remove("hidden");
+    $("replyForm").classList.remove("hidden");
+    $("subjectText").textContent = safeText(msg.subject, "Support request");
+    $("customerDetails").textContent =
+      safeText(msg.customer_name, "Customer") + " · " +
+      safeText(msg.customer_email, "Email unavailable") +
+      " · Received " + dateText(msg.created_at);
+    $("conversationMessages").replaceChildren();
+    if (showLoading) status("conversationStatus", "Loading conversation...");
+
+    addConversationBubble("Customer", msg.message, msg.created_at, "customer");
+
+    try {
+      const data = await invokeSupport({ action: "conversation", message_id: msg.id });
+      const replies = getReplyArray(data);
+      replies.sort((a,b) => new Date(a.created_at || 0) - new Date(b.created_at || 0));
+      replies.forEach(reply => {
+        const isAdmin = String(reply.sender_role || "").toLowerCase() === "admin";
+        addConversationBubble(isAdmin ? "Administrator" : "Customer", reply.reply || reply.message || reply.text, reply.created_at, isAdmin ? "admin" : "customer");
+      });
+      if (!replies.length && msg.admin_reply) {
+        addConversationBubble("Administrator", msg.admin_reply, msg.updated_at, "admin");
+      }
+      status("conversationStatus", "");
+    } catch (err) {
+      if (msg.admin_reply) addConversationBubble("Administrator", msg.admin_reply, msg.updated_at, "admin");
+      status("conversationStatus", "Could not load full reply history: " + (err.message || String(err)), true);
+    }
+  }
+
+  $("loginForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    $("loginButton").disabled = true;
+    status("loginStatus", "Signing in...");
+    try {
+      const { data, error } = await db.auth.signInWithPassword({
+        email: $("email").value.trim(),
+        password: $("password").value
+      });
+      if (error) throw error;
+      if (!data.user || data.user.id !== ADMIN_ID) {
+        await db.auth.signOut();
+        throw new Error("Access denied. This account is not an authorised administrator.");
+      }
+      showInbox(data.user);
+    } catch (err) {
+      status("loginStatus", "Login failed: " + (err.message || String(err)), true);
+    } finally {
+      $("loginButton").disabled = false;
+    }
+  });
+
+  function showInbox(user) {
+    $("loginSection").classList.add("hidden");
+    $("inboxSection").classList.remove("hidden");
+    $("signedInAs").textContent = "Signed in as " + safeText(user.email, "Administrator");
+    loadMessages();
+  }
+
+  $("refreshButton").addEventListener("click", loadMessages);
+
+  $("logoutButton").addEventListener("click", async () => {
+    await db.auth.signOut();
+    messages = [];
+    clearConversation();
+    $("inboxSection").classList.add("hidden");
+    $("loginSection").classList.remove("hidden");
+    $("loginForm").reset();
+    status("loginStatus", "You have logged out.");
+  });
+
+  $("replyForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    if (!selectedMessage) return;
+    const reply = $("replyText").value.trim();
+    if (!reply) {
+      status("conversationStatus", "Please write a reply first.", true);
+      return;
+    }
+    if (!confirm("Send this reply to the customer?")) return;
+
+    $("sendReplyButton").disabled = true;
+    status("conversationStatus", "Sending reply...");
+    try {
+      await invokeSupport({
+        action: "reply",
+        message_id: selectedMessage.id,
+        reply
+      });
+      $("replyText").value = "";
+      status("conversationStatus", "Reply sent successfully.");
+      await loadMessages();
+    } catch (err) {
+      status("conversationStatus", "Reply failed: " + (err.message || String(err)), true);
+    } finally {
+      $("sendReplyButton").disabled = false;
+    }
+  });
+
+  async function restoreSession() {
+    const { data, error } = await db.auth.getSession();
+    if (error) return;
+    const user = data.session?.user;
+    if (user && user.id === ADMIN_ID) showInbox(user);
+    else if (user) await db.auth.signOut();
+  }
+
+  restoreSession();
+})();
+</script>
+</body>
+</html>
