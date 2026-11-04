@@ -123,6 +123,13 @@ th,td{text-align:left;padding:10px;border-bottom:1px solid #e5eaf1}
 <div id="creditStatus" class="status" role="status"></div>
 </div>
 
+<div class="card">
+<h3>Support Inbox Connection Test</h3>
+<p class="muted">Temporary test button. It checks whether the signed-in administrator can retrieve support messages.</p>
+<button id="testSupportButton" type="button">Test Support Inbox</button>
+<div id="supportTestStatus" class="status" role="status"></div>
+</div>
+
 </section>
 </main>
 
@@ -425,6 +432,39 @@ $("creditForm").addEventListener("submit",async e=>{
 
 });
 
+$("testSupportButton").addEventListener("click",async()=>{
+
+  const btn=$("testSupportButton");
+  btn.disabled=true;
+  message("supportTestStatus","Testing support inbox connection...");
+
+  try{
+    const {data,error}=await db.functions.invoke("send-support-message",{
+      body:{action:"admin_list"}
+    });
+
+    if(error){
+      message("supportTestStatus","Test failed: "+error.message,true);
+      return;
+    }
+
+    const count=Array.isArray(data?.messages) ? data.messages.length :
+                Array.isArray(data) ? data.length : null;
+
+    message("supportTestStatus",
+      count===null
+        ? "The function responded: "+JSON.stringify(data)
+        : "Connection successful. Support messages returned: "+count
+    );
+
+  }catch(err){
+    message("supportTestStatus","Test failed: "+(err.message||String(err)),true);
+  }finally{
+    btn.disabled=false;
+  }
+
+});
+
 async function restoreSession(){
 
   const {data,error}=await db.auth.getSession();
@@ -447,4 +487,4 @@ restoreSession();
 </script>
 
 </body>
-  </html>
+</html>
