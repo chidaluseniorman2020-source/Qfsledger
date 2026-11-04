@@ -90,7 +90,7 @@ th,td{text-align:left;padding:10px;border-bottom:1px solid #e5eaf1}
 
 <div class="card">
 <h3>Manual Customer Credit</h3>
-<p class="muted">Use this only after independently verifying the customer's payment.</p>
+<p class="muted">Manually adjust a customer's displayed balance. This action is recorded as an administrator credit, not as a verified deposit.</p>
 
 <form id="creditForm">
 
@@ -113,8 +113,8 @@ th,td{text-align:left;padding:10px;border-bottom:1px solid #e5eaf1}
 <label>Amount</label>
 <input id="amount" type="number" min="0.00000001" step="any" required>
 
-<label>Payment verification note</label>
-<input id="note" type="text" maxlength="500" placeholder="Example: Bank transfer verified" required>
+<label>Admin credit note</label>
+<input id="note" type="text" maxlength="500" placeholder="Example: Admin balance adjustment" required>
 
 <button id="creditButton" type="submit">Credit Customer Balance</button>
 
@@ -399,11 +399,11 @@ $("creditForm").addEventListener("submit",async e=>{
   }
 
   if(!note){
-    message("creditStatus","Enter a payment verification note.",true);
+    message("creditStatus","Enter an admin credit note.",true);
     return;
   }
 
-  if(!confirm("Confirm manual credit of "+amount+" "+currency+" to this customer?")) return;
+  if(!confirm("Confirm admin balance credit of "+amount+" "+currency+" to this customer?")) return;
 
   const btn=$("creditButton");
   btn.disabled=true;
@@ -423,7 +423,7 @@ $("creditForm").addEventListener("submit",async e=>{
     return;
   }
 
-  message("creditStatus","Customer balance credited successfully.");
+  message("creditStatus","Admin balance adjustment recorded successfully.");
 
   $("amount").value="";
   $("note").value="";
