@@ -98,6 +98,8 @@
     @media(max-width:420px){.hero h1{font-size:39px}.card{display:none!important}.phone{margin-left:30px;width:245px;min-height:490px}.grid,.features .grid,.secgrid,.steps-grid,.info-grid{grid-template-columns:1fr}.foot{grid-template-columns:1fr}}
   
     .support-overlay{position:fixed;inset:0;background:rgba(8,22,45,.62);display:none;align-items:center;justify-content:center;padding:18px;z-index:10000}.support-overlay.open{display:flex}.support-box{position:relative;width:min(100%,480px);background:#fff;border-radius:20px;padding:28px;box-shadow:0 24px 70px rgba(0,0,0,.25);color:#10284c}.support-box h2{margin:0 36px 8px 0;font-size:25px}.support-box p{margin:0 0 18px;color:#5e6c80;line-height:1.5}.support-box label{display:block;font-weight:700;margin:0 0 8px}.support-box textarea{width:100%;min-height:140px;resize:vertical;border:1px solid #d5deeb;border-radius:12px;padding:13px;font:inherit;box-sizing:border-box;color:#10284c}.support-box textarea:focus{outline:2px solid #0758e8;outline-offset:1px}.support-close{position:absolute;right:16px;top:12px;border:0;background:transparent;font-size:30px;line-height:1;cursor:pointer;color:#5e6c80}.support-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end;flex-wrap:wrap}.support-cancel{border:1px solid #d5deeb;background:#fff;color:#10284c;border-radius:10px;padding:11px 16px;font-weight:700;cursor:pointer}.support-box .btn:disabled{opacity:.65;cursor:wait}@media(max-width:480px){.support-box{padding:22px}.support-box h2{font-size:22px}}
+
+.support-box{max-height:92vh;overflow-y:auto}.support-box input{width:100%;padding:12px;border:1px solid #d5deeb;border-radius:10px;font:inherit;color:#10284c;box-sizing:border-box}.support-result{margin-top:16px;padding:14px;border:1px solid #d5deeb;border-radius:12px;background:#f6f9ff;overflow-wrap:anywhere}.support-result h3{margin:0 0 8px;font-size:16px}.support-result p{font-size:13px;margin:7px 0;color:#536a8a}.code-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.code-row code{font-size:17px;font-weight:800;letter-spacing:1px;background:#e6efff;padding:10px;border-radius:8px;color:#10284c}.support-divider{border:0;border-top:1px solid #dce7f5;margin:22px 0}
 </style>
 </head>
 <body>
@@ -143,7 +145,7 @@
 </main>
 <footer><div class="foot"><div><a class="brand" href="#home"><span class="logo">Q</span>QFS Ledger</a><p>Your digital assets. Our priority.</p></div><div><h4>Product</h4><a href="#assets">Assets</a><a href="#features">Features</a></div><div><h4>Company</h4><a href="#why">Security</a><a href="#faq">Platform information</a></div><div><h4>Support</h4><p>Contact our support team for assistance.</p></div></div><div class="copy"><span>© 2026 QFS Ledger.</span></div></footer>
 <button class="btn primary support-float" type="button" id="sendSupportMessage" onclick="document.getElementById('supportOverlay').classList.add('open')">Need help? Contact us</button>
-<div class="support-overlay" id="supportOverlay" role="dialog" aria-modal="true" aria-labelledby="supportTitle"><div class="support-box"><button class="support-close" type="button" id="supportClose" aria-label="Close support form">&times;</button><h2 id="supportTitle">Contact QFS Ledger Support</h2><p>Tell us how we can help. Your message will be sent to our support inbox.</p><form id="supportForm"><label for="supportMessage">Your message</label><textarea id="supportMessage" name="message" maxlength="5000" required placeholder="Type your message here..."></textarea><div class="support-actions"><button class="support-cancel" type="button" id="supportCancel">Cancel</button><button class="btn primary" type="submit" id="supportSubmit">Send message</button></div></form></div></div>
+<div class="support-overlay" id="supportOverlay" role="dialog" aria-modal="true" aria-labelledby="supportTitle"><div class="support-box"><button class="support-close" type="button" id="supportClose" aria-label="Close support form">&times;</button><h2 id="supportTitle">Contact QFS Ledger Support</h2><p>Send a message without signing in. Keep your private reference code so you can check our reply later.</p><form id="supportForm"><label for="supportMessage">Your message</label><textarea id="supportMessage" name="message" maxlength="5000" required placeholder="Type your message here..."></textarea><div class="support-actions"><button class="support-cancel" type="button" id="supportCancel">Cancel</button><button class="btn primary" type="submit" id="supportSubmit">Send message</button></div></form><div id="supportCodePanel" class="support-result" hidden><h3>Your private reference code</h3><p>Save this code. Anyone with it may be able to view this support conversation.</p><div class="code-row"><code id="supportCode"></code><button type="button" class="support-cancel" id="copySupportCode">Copy</button></div></div><hr class="support-divider"><form id="supportLookupForm"><label for="supportLookupCode">Already have a reference code?</label><input id="supportLookupCode" type="text" maxlength="16" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Enter your 16-character code" required><div class="support-actions"><button class="btn primary" type="submit" id="supportLookupButton">Check reply</button></div></form><div id="supportConversation" class="support-result" hidden aria-live="polite"></div></div></div>
 <div class="notice" id="notice" role="status" aria-live="polite"></div>
 <div class="auth-overlay" id="authOverlay" role="dialog" aria-modal="true" aria-labelledby="authTitle">
   <div class="auth-box"><button class="auth-close" id="authClose" type="button" aria-label="Close">×</button>
@@ -291,37 +293,90 @@
   const supportForm = document.getElementById('supportForm');
   const supportMessage = document.getElementById('supportMessage');
   const supportSubmit = document.getElementById('supportSubmit');
+  const supportCodePanel = document.getElementById('supportCodePanel');
+  const supportCode = document.getElementById('supportCode');
+  const supportLookupForm = document.getElementById('supportLookupForm');
+  const supportLookupCode = document.getElementById('supportLookupCode');
+  const supportLookupButton = document.getElementById('supportLookupButton');
+  const supportConversation = document.getElementById('supportConversation');
+
   function closeSupportForm() { supportOverlay.classList.remove('open'); }
   document.getElementById('sendSupportMessage').addEventListener('click', () => { supportOverlay.classList.add('open'); supportMessage.focus(); });
   document.getElementById('supportClose').addEventListener('click', closeSupportForm);
   document.getElementById('supportCancel').addEventListener('click', closeSupportForm);
   supportOverlay.addEventListener('click', event => { if (event.target === supportOverlay) closeSupportForm(); });
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && supportOverlay.classList.contains('open')) closeSupportForm(); });
+
   supportForm.addEventListener('submit', async event => {
-    event.preventDefault(); const message = supportMessage.value.trim();
+    event.preventDefault();
+    const message = supportMessage.value.trim();
     if (!message) { supportMessage.focus(); return; }
-    supportSubmit.disabled = true; supportSubmit.textContent = 'Sending...';
+    supportSubmit.disabled = true;
+    supportSubmit.textContent = 'Sending...';
+    supportCodePanel.hidden = true;
     try {
-      const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
-      if (sessionError) throw sessionError;
-      if (!session || !session.access_token) {
-        openAuth('login');
-        throw new Error('Please log in to your QFS Ledger account before sending a support message.');
-      }
       const response = await fetch(`${SUPABASE_URL}/functions/v1/send-support-message`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_PUBLISHABLE_KEY,
-          'Authorization': `Bearer ${session.access_token}`
-        },
-        body: JSON.stringify({ message })
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_PUBLISHABLE_KEY },
+        body: JSON.stringify({ message, source: 'homepage' })
       });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'Your message could not be sent. Please try again.');
-      supportForm.reset(); closeSupportForm(); showNotice('Your support message has been sent successfully.');
-    } catch (error) { console.error('Support message error:', error); showNotice(error.message || 'Unable to send your message. Please try again.'); }
-    finally { supportSubmit.disabled = false; supportSubmit.textContent = 'Send message'; }
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || result.message || `Unable to send message (${response.status}).`);
+      const code = result?.data?.access_code || result?.access_code || result?.data?.data?.access_code || result?.message?.access_code;
+      if (!code) throw new Error('Your message may have been sent, but no reference code was returned. Do not send it again yet. Please contact support.');
+      supportCode.textContent = code;
+      supportCodePanel.hidden = false;
+      supportForm.reset();
+      showNotice('Message sent. Save your private reference code below.');
+    } catch (error) {
+      console.error('Public support message error:', error);
+      showNotice(error.message || 'Unable to send your message. Please try again.');
+    } finally {
+      supportSubmit.disabled = false;
+      supportSubmit.textContent = 'Send message';
+    }
+  });
+
+  document.getElementById('copySupportCode').addEventListener('click', async () => {
+    const code = supportCode.textContent.trim();
+    if (!code) return;
+    try { await navigator.clipboard.writeText(code); showNotice('Reference code copied.'); }
+    catch (_) { supportLookupCode.value = code; supportLookupCode.focus(); supportLookupCode.select(); showNotice('Code placed in the box below. Press and hold to copy it.'); }
+  });
+
+  supportLookupForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    const code = supportLookupCode.value.trim().toLowerCase();
+    if (!/^[0-9a-f]{16}$/.test(code)) { showNotice('Enter the full 16-character reference code.'); return; }
+    if (!supabaseClient) { showNotice('Support lookup is unavailable. Refresh the page and try again.'); return; }
+    supportLookupButton.disabled = true;
+    supportLookupButton.textContent = 'Checking...';
+    supportConversation.hidden = true;
+    supportConversation.replaceChildren();
+    try {
+      const { data, error } = await supabaseClient.rpc('check_support_message', { p_access_code: code });
+      if (error) throw error;
+      if (!data || !data.message) throw new Error('No support message was found for that code. Check it and try again.');
+      const heading = document.createElement('h3'); heading.textContent = 'Your support conversation'; supportConversation.appendChild(heading);
+      const label = document.createElement('strong'); label.textContent = 'Your message'; supportConversation.appendChild(label);
+      const original = document.createElement('p'); original.textContent = data.message.message || ''; supportConversation.appendChild(original);
+      const status = document.createElement('p'); status.textContent = 'Status: ' + (data.message.status || 'received'); supportConversation.appendChild(status);
+      const repliesHeading = document.createElement('strong'); repliesHeading.textContent = 'Support replies'; supportConversation.appendChild(repliesHeading);
+      const replies = Array.isArray(data.replies) ? data.replies : [];
+      if (!replies.length && data.message.admin_reply) replies.push({ reply: data.message.admin_reply });
+      if (!replies.length) {
+        const waiting = document.createElement('p'); waiting.textContent = 'No reply yet. Please check again later using this same code.'; supportConversation.appendChild(waiting);
+      } else {
+        replies.forEach(item => { const reply = document.createElement('p'); reply.textContent = item.reply || ''; supportConversation.appendChild(reply); });
+      }
+      supportConversation.hidden = false;
+    } catch (error) {
+      console.error('Support lookup error:', error);
+      showNotice(error.message || 'Unable to check your reply. Please try again.');
+    } finally {
+      supportLookupButton.disabled = false;
+      supportLookupButton.textContent = 'Check reply';
+    }
   });
 
   window.addEventListener('error', event => {
