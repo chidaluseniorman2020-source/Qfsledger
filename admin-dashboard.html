@@ -91,6 +91,15 @@ th,td{text-align:left;padding:10px;border-bottom:1px solid #e5eaf1}
 
 <div class="card">
 <div class="section-title">
+<h3>Cryptocurrency Swap Requests</h3>
+<button id="refreshSwapRequests" type="button">Refresh</button>
+</div>
+<p class="muted">Review customer swap requests. Updating a status does not exchange or transfer cryptocurrency.</p>
+<div id="swapRequests">Loading swap requests...</div>
+</div>
+
+<div class="card">
+<div class="section-title">
 <h3>QFS Card Applications</h3>
 <button id="refreshCardApplications" type="button">Refresh</button>
 </div>
@@ -315,6 +324,43 @@ async function loadWithdrawals(){
 }
 
 
+async function loadSwapRequests(){
+  const host=$("swapRequests");
+  host.textContent="Loading swap requests...";
+  const {data,error}=await db.from("swap_requests").select("id,user_id,customer_email,from_currency,to_currency,amount,status,admin_note,created_at").order("created_at",{ascending:false}).limit(100);
+  if(error){host.textContent="Could not load swap requests: "+error.message;return;}
+  host.textContent="";
+  if(!data||data.length===0){host.textContent="No swap requests yet.";return;}
+  data.forEach(r=>{
+    const box=element("div",undefined,"item");
+    box.append(element("h3","Swap request #"+r.id));
+    box.append(element("p","Status: "+String(r.status||"pending").toUpperCase()));
+    box.append(element("p","Customer email: "+(r.customer_email||"Not available")));
+    box.append(element("p","Swap: "+r.amount+" "+r.from_currency+" → "+r.to_currency));
+    box.append(element("p","Submitted: "+(r.created_at||"Not available")));
+    box.append(element("p","User ID: "+r.user_id));
+    if(r.admin_note)box.append(element("p","Admin note: "+r.admin_note));
+    if(r.status==="pending"){
+      const approve=element("button","Approve request");
+      const reject=element("button","Reject request","reject");
+      const updateStatus=async(status)=>{
+        const note=prompt("Optional admin note:","");
+        if(note===null)return;
+        if(!confirm("Mark swap request #"+r.id+" as "+status.toUpperCase()+"? This will not execute a cryptocurrency swap."))return;
+        approve.disabled=true;reject.disabled=true;
+        const {error:updateError}=await db.from("swap_requests").update({status,admin_note:note.trim()||null}).eq("id",r.id).eq("status","pending");
+        if(updateError){alert("Could not update swap request: "+updateError.message);approve.disabled=false;reject.disabled=false;return;}
+        alert("Swap request status updated. No cryptocurrency was exchanged.");
+        await loadSwapRequests();
+      };
+      approve.addEventListener("click",()=>updateStatus("approved"));
+      reject.addEventListener("click",()=>updateStatus("rejected"));
+      box.append(approve,reject);
+    }
+    host.append(box);
+  });
+}
+
 async function loadCardApplications(){
   $("cardApplications").textContent="Loading card applications...";
   const {data,error}=await db.from("qfs_card_applications").select("id,user_id,customer_email,display_name,city,country,fee_usd,currency,network,payment_address,status,created_at").order("created_at",{ascending:false}).limit(100);
@@ -433,6 +479,7 @@ async function refreshAll(){
   message("mainStatus","Refreshing dashboard...");
   await loadDeposits();
   await loadWithdrawals();
+  await loadSwapRequests();
   await loadCardApplications();
   await loadSupportInbox();
   await loadUsers();
@@ -483,6 +530,7 @@ $("loginForm").addEventListener("submit",async e=>{
 
 $("refreshDeposits").addEventListener("click",loadDeposits);
 $("refreshWithdrawals").addEventListener("click",loadWithdrawals);
+$("refreshSwapRequests").addEventListener("click",loadSwapRequests);
 $("refreshCardApplications").addEventListener("click",loadCardApplications);
 $("refreshUsers").addEventListener("click",loadUsers);
 
