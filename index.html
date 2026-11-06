@@ -302,7 +302,21 @@
     if (!message) { supportMessage.focus(); return; }
     supportSubmit.disabled = true; supportSubmit.textContent = 'Sending...';
     try {
-      const response = await fetch(`${SUPABASE_URL}/functions/v1/send-support-message`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_PUBLISHABLE_KEY }, body: JSON.stringify({ message }) });
+      const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+      if (sessionError) throw sessionError;
+      if (!session || !session.access_token) {
+        openAuth('login');
+        throw new Error('Please log in to your QFS Ledger account before sending a support message.');
+      }
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/send-support-message`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_PUBLISHABLE_KEY,
+          'Authorization': `Bearer ${session.access_token}`
+        },
+        body: JSON.stringify({ message })
+      });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Your message could not be sent. Please try again.');
       supportForm.reset(); closeSupportForm(); showNotice('Your support message has been sent successfully.');
