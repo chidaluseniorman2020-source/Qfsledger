@@ -91,6 +91,15 @@ th,td{text-align:left;padding:10px;border-bottom:1px solid #e5eaf1}
 
 <div class="card">
 <div class="section-title">
+<h3>QFS Card Applications</h3>
+<button id="refreshCardApplications" type="button">Refresh</button>
+</div>
+<p class="muted">Customer application records. A pending record does not confirm receipt of payment or card issuance.</p>
+<div id="cardApplications">Loading card applications...</div>
+</div>
+
+<div class="card">
+<div class="section-title">
 <h3>Customer Balances</h3>
 <button id="refreshUsers">Refresh</button>
 </div>
@@ -302,6 +311,29 @@ async function loadWithdrawals(){
   });
 }
 
+
+async function loadCardApplications(){
+  $("cardApplications").textContent="Loading card applications...";
+  const {data,error}=await db.from("qfs_card_applications").select("id,user_id,customer_email,display_name,city,country,fee_usd,currency,network,payment_address,status,created_at").order("created_at",{ascending:false}).limit(100);
+  if(error){$("cardApplications").textContent="Could not load card applications: "+error.message;return;}
+  $("cardApplications").textContent="";
+  if(!data||data.length===0){$("cardApplications").textContent="No card applications yet.";return;}
+  data.forEach(a=>{
+    const box=element("div",undefined,"item");
+    box.append(element("h3","Card application #"+a.id));
+    box.append(element("p","Status: "+String(a.status||"pending").toUpperCase()));
+    box.append(element("p","Customer: "+(a.display_name||"Name unavailable")));
+    box.append(element("p","Email: "+(a.customer_email||"Email unavailable")));
+    box.append(element("p","Location: "+[a.city,a.country].filter(Boolean).join(", ")));
+    box.append(element("p","Fee listed: USD $"+Number(a.fee_usd||1000).toLocaleString("en-US")));
+    box.append(element("p","Asset / network: "+a.currency+" — "+a.network));
+    box.append(element("p","Payment address displayed: "+a.payment_address));
+    box.append(element("p","Submitted: "+(a.created_at||"Not available")));
+    box.append(element("p","User ID: "+a.user_id));
+    $("cardApplications").appendChild(box);
+  });
+}
+
 async function loadUsers(){
 
   $("users").textContent="Loading customers...";
@@ -373,6 +405,7 @@ async function refreshAll(){
   message("mainStatus","Refreshing dashboard...");
   await loadDeposits();
   await loadWithdrawals();
+  await loadCardApplications();
   await loadUsers();
   message("mainStatus","Dashboard refreshed.");
 }
@@ -421,6 +454,7 @@ $("loginForm").addEventListener("submit",async e=>{
 
 $("refreshDeposits").addEventListener("click",loadDeposits);
 $("refreshWithdrawals").addEventListener("click",loadWithdrawals);
+$("refreshCardApplications").addEventListener("click",loadCardApplications);
 $("refreshUsers").addEventListener("click",loadUsers);
 
 $("logoutButton").addEventListener("click",async()=>{
