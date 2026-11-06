@@ -189,9 +189,27 @@ $('sendForm').addEventListener('submit',async e=>{
 });
 $('previewSwap').addEventListener('click',()=>{const from=$('swapFrom').value,to=$('swapTo').value,amount=Number($('swapAmount').value);$('swapResult').textContent=from===to?'Choose two different assets.':amount>0?('Your swap request has been prepared.'):'Enter an amount greater than zero.'});
 $('swapFrom').addEventListener('change',()=>{if($('swapFrom').value===$('swapTo').value){$('swapTo').selectedIndex=($('swapTo').selectedIndex+1)%$('swapTo').options.length}});
-document.querySelectorAll('[data-wallet]').forEach(b=>b.addEventListener('click',()=>{const provider=b.dataset.wallet;$('walletPrompt').textContent='Send a message about '+provider;$('walletProviderList').hidden=true;$('walletMessageForm').hidden=false;$('walletMessageLabel').textContent='Message for '+provider;$('walletMessage').value='';$('walletResult').textContent='';}));
+document.querySelectorAll('[data-wallet]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-wallet]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');const provider=b.dataset.wallet;$('walletPrompt').textContent='Send a message about '+provider;$('walletProviderList').hidden=true;$('walletMessageForm').hidden=false;$('walletMessageLabel').textContent='Message for '+provider;$('walletMessage').value='';$('walletResult').textContent='';}));
 $('walletBack').addEventListener('click',()=>{$('walletMessageForm').hidden=true;$('walletProviderList').hidden=false;$('walletPrompt').textContent='Choose a wallet provider below.';$('walletResult').textContent=''});
-$('walletMessageForm').addEventListener('submit',e=>{e.preventDefault();const message=$('walletMessage').value.trim();if(!message){$('walletResult').textContent='Please type a message first.';return}$('walletResult').textContent='Your message is written, but it has not been sent because a support email address has not been configured yet.';});
+$('walletMessageForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+ const user=currentUser;
+ const provider=document.querySelector('[data-wallet].selected')?.dataset.wallet || $('walletPrompt').textContent.replace(/^Send a message about /,'');
+ const message=$('walletMessage').value.trim();
+ const btn=$('walletMessageForm').querySelector('button[type=submit]');
+ if(!user){$('walletResult').textContent='Please log in before sending a wallet request.';return}
+ if(!message){$('walletResult').textContent='Please type a message first.';return}
+ btn.disabled=true;btn.textContent='Sending…';$('walletResult').textContent='Submitting your request…';
+ try{
+  const bodyMessage='Wallet provider selected: '+provider+'\n\nCustomer message: '+message+'\n\nNote: This is a wallet-link request only. No wallet connection or blockchain authorization has taken place.';
+  const {data,error}=await supa.functions.invoke('send-support-message',{body:{message:bodyMessage}});
+  if(error)throw error;
+  if(data?.error)throw new Error(data.error);
+  $('walletResult').textContent='Your request was submitted successfully. Our team will review it. Your wallet has not been connected.';
+  $('walletMessage').value='';
+ }catch(err){$('walletResult').textContent='Could not send your request: '+(err.message||'Please try again.');}
+ finally{btn.disabled=false;btn.textContent='Send message'}
+});
 const cardAddressKey={BTC:'BTC',ETH:'ETH',BNB:'BNB',XLM:'XLM',XRP:'XRP',TRX:'TRX',USDT:'USDT_TRC20'};
 $('cardCrypto').addEventListener('change',()=>{const v=$('cardCrypto').value,info=$('cardPaymentInfo');if(!v){info.hidden=true;$('cardPaymentNetwork').textContent='';return}const item=receiveAddresses[cardAddressKey[v]];if(!item){info.hidden=true;say('Payment address is not configured for this network.','error');return}$('cardPaymentNetwork').textContent=item.address;info.hidden=false});
 $('copyCardAddress').addEventListener('click',async()=>{const address=$('cardPaymentNetwork').textContent;if(!address)return;try{await navigator.clipboard.writeText(address);say('Payment address copied.','success')}catch(e){const range=document.createRange();range.selectNodeContents($('cardPaymentNetwork'));const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);say('Address selected. Press and hold it, then choose Copy.','success')}});
