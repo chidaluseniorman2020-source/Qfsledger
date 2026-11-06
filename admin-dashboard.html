@@ -82,6 +82,15 @@ th,td{text-align:left;padding:10px;border-bottom:1px solid #e5eaf1}
 
 <div class="card">
 <div class="section-title">
+<h3>Withdrawal Requests</h3>
+<button id="refreshWithdrawals" type="button">Refresh</button>
+</div>
+<p class="muted">Review customer requests. Approving or rejecting here only changes the request status; it does not send cryptocurrency or deduct a balance.</p>
+<div id="withdrawals">Loading withdrawal requests...</div>
+</div>
+
+<div class="card">
+<div class="section-title">
 <h3>Customer Balances</h3>
 <button id="refreshUsers">Refresh</button>
 </div>
@@ -246,6 +255,53 @@ async function loadDeposits(){
 
 }
 
+async function loadWithdrawals(){
+  $("withdrawals").textContent="Loading withdrawal requests...";
+  const {data,error}=await db.from("withdrawal_requests").select("id,user_id,customer_email,currency,network,destination_address,amount,status,created_at,admin_note").order("created_at",{ascending:false}).limit(100);
+  if(error){$("withdrawals").textContent="Could not load withdrawal requests: "+error.message;return;}
+  $("withdrawals").textContent="";
+  if(!data||data.length===0){$("withdrawals").textContent="No withdrawal requests yet.";return;}
+  data.forEach(w=>{
+    const box=element("div",undefined,"item");
+    const title=element("h3","Withdrawal request #"+w.id);
+    const badge=element("span",String(w.status||"pending").toUpperCase(),"badge");
+    box.append(title,badge);
+    box.append(element("p","Customer: "+(w.customer_email||"Email unavailable")));
+    box.append(element("p","Asset and amount: "+w.amount+" "+w.currency));
+    box.append(element("p","Network: "+w.network));
+    box.append(element("p","Destination: "+w.destination_address));
+    box.append(element("p","Submitted: "+(w.created_at||"Not available")));
+    box.append(element("p","User ID: "+w.user_id));
+    if(w.admin_note)box.append(element("p","Admin note: "+w.admin_note));
+    if(w.status==="pending"){
+      const approve=element("button","Approve request");
+      const reject=element("button","Reject request","reject");
+      approve.addEventListener("click",async()=>{
+        const note=prompt("Optional admin note (this does not send funds):","");
+        if(note===null)return;
+        if(!confirm("Mark withdrawal request #"+w.id+" as APPROVED? No cryptocurrency will be sent and no balance will be deducted."))return;
+        approve.disabled=true;reject.disabled=true;
+        const {error}=await db.from("withdrawal_requests").update({status:"approved",admin_note:note.trim()||null,reviewed_at:new Date().toISOString()}).eq("id",w.id).eq("status","pending");
+        if(error){alert("Approval update failed: "+error.message);approve.disabled=false;reject.disabled=false;return;}
+        alert("Request marked approved. This is an administrative status only; no crypto was sent.");
+        await loadWithdrawals();
+      });
+      reject.addEventListener("click",async()=>{
+        const note=prompt("Reason for rejection (optional):","");
+        if(note===null)return;
+        if(!confirm("Reject withdrawal request #"+w.id+"? No cryptocurrency will be sent."))return;
+        approve.disabled=true;reject.disabled=true;
+        const {error}=await db.from("withdrawal_requests").update({status:"rejected",admin_note:note.trim()||null,reviewed_at:new Date().toISOString()}).eq("id",w.id).eq("status","pending");
+        if(error){alert("Rejection failed: "+error.message);approve.disabled=false;reject.disabled=false;return;}
+        alert("Withdrawal request rejected.");
+        await loadWithdrawals();
+      });
+      box.append(approve,reject);
+    }
+    $("withdrawals").appendChild(box);
+  });
+}
+
 async function loadUsers(){
 
   $("users").textContent="Loading customers...";
@@ -316,6 +372,7 @@ async function loadUsers(){
 async function refreshAll(){
   message("mainStatus","Refreshing dashboard...");
   await loadDeposits();
+  await loadWithdrawals();
   await loadUsers();
   message("mainStatus","Dashboard refreshed.");
 }
@@ -363,6 +420,7 @@ $("loginForm").addEventListener("submit",async e=>{
 });
 
 $("refreshDeposits").addEventListener("click",loadDeposits);
+$("refreshWithdrawals").addEventListener("click",loadWithdrawals);
 $("refreshUsers").addEventListener("click",loadUsers);
 
 $("logoutButton").addEventListener("click",async()=>{
