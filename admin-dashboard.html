@@ -471,6 +471,31 @@ async function loadSupportInbox(){
     const msg=element("p","Message: "+body);msg.style.whiteSpace="pre-wrap";box.append(msg);
     if(m.status)box.append(element("p","Status: "+m.status));
     if(m.admin_reply)box.append(element("p","Admin reply: "+m.admin_reply));
+    const thread=element("div",undefined,"support-thread");
+    thread.style.cssText="margin-top:12px;padding:12px;background:#f7f9fc;border:1px solid #e5eaf1;border-radius:10px";
+    thread.append(element("h4","Conversation"));
+    const history=element("div","Loading conversation…");history.style.cssText="white-space:pre-wrap;font-size:13px;line-height:1.6";thread.append(history);
+    const replyForm=element("form");replyForm.style.cssText="margin-top:10px;display:grid;gap:8px";
+    const reply=element("textarea");reply.rows=3;reply.maxLength=5000;reply.required=true;reply.placeholder="Write a reply to this customer…";reply.style.cssText="width:100%;padding:10px;border:1px solid #d5deea;border-radius:8px;font:inherit";
+    const send=element("button","Send reply");send.type="submit";
+    const replyStatus=element("p","");replyStatus.style.cssText="font-size:12px;margin:0";
+    replyForm.append(reply,send,replyStatus);thread.append(replyForm);box.append(thread);
+    const loadThread=async()=>{
+      const {data:replies,error:replyError}=await db.from("support_replies").select("id,sender_role,reply,created_at").eq("message_id",m.id).order("created_at",{ascending:true});
+      if(replyError){history.textContent="Could not load replies: "+replyError.message;return}
+      history.textContent="";
+      if(!replies?.length){history.textContent="No replies yet.";return}
+      replies.forEach(r=>{const line=element("p",(r.sender_role==="admin"?"You (Admin)":"Customer")+" · "+(r.created_at?new Date(r.created_at).toLocaleString():"")+"\n"+r.reply);line.style.cssText="white-space:pre-wrap;margin:8px 0;padding:9px;background:#fff;border-radius:8px";history.append(line)});
+    };
+    loadThread();
+    replyForm.addEventListener("submit",async ev=>{
+      ev.preventDefault();const text=reply.value.trim();if(!text)return;
+      send.disabled=true;send.textContent="Sending…";replyStatus.textContent="";
+      const {error:sendError}=await db.from("support_replies").insert({message_id:m.id,sender_id:ADMIN_ID,sender_role:"admin",reply:text});
+      send.disabled=false;send.textContent="Send reply";
+      if(sendError){replyStatus.textContent="Could not send reply: "+sendError.message;replyStatus.style.color="#b42318";return}
+      reply.value="";replyStatus.textContent="Reply sent.";replyStatus.style.color="#166534";await loadThread();
+    });
     host.append(box);
   });
 }
