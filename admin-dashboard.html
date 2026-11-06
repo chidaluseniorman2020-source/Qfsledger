@@ -143,10 +143,13 @@ th,td{text-align:left;padding:10px;border-bottom:1px solid #e5eaf1}
 </div>
 
 <div class="card">
-<h3>Support Inbox Connection Test</h3>
-<p class="muted">Temporary test button. It checks whether the signed-in administrator can retrieve support messages.</p>
-<button id="testSupportButton" type="button">Test Support Inbox</button>
-<div id="supportTestStatus" class="status" role="status"></div>
+<div class="section-title">
+<h3>Wallet Link Requests & Support Inbox</h3>
+<button id="refreshSupportInbox" type="button">Refresh messages</button>
+</div>
+<p class="muted">Customer wallet requests and messages. A submitted request does not mean a wallet has actually been connected.</p>
+<div id="supportInbox">Loading messages...</div>
+<div id="supportInboxStatus" class="status" role="status"></div>
 </div>
 
 </section>
@@ -401,11 +404,37 @@ async function loadUsers(){
 
 }
 
+async function loadSupportInbox(){
+  const host=$("supportInbox");
+  host.textContent="Loading messages...";
+  const {data,error}=await db.functions.invoke("send-support-message",{body:{action:"admin_list"}});
+  if(error){host.textContent="Could not load messages: "+error.message;return;}
+  if(data?.error){host.textContent="Could not load messages: "+data.error;return;}
+  const rows=Array.isArray(data?.messages)?data.messages:(Array.isArray(data)?data:[]);
+  host.textContent="";
+  if(!rows.length){host.textContent="No messages yet.";return;}
+  rows.forEach(m=>{
+    const box=element("div",undefined,"item");
+    box.append(element("h3","Message #"+(m.id??"")));
+    if(m.created_at)box.append(element("p","Received: "+new Date(m.created_at).toLocaleString()));
+    if(m.customer_name)box.append(element("p","Customer: "+m.customer_name));
+    if(m.customer_email)box.append(element("p","Email: "+m.customer_email));
+    if(m.subject)box.append(element("p","Subject: "+m.subject));
+    if(m.wallet_provider)box.append(element("p","Wallet selected: "+m.wallet_provider));
+    const body=m.message||m.body||"(No message text returned)";
+    const msg=element("p","Message: "+body);msg.style.whiteSpace="pre-wrap";box.append(msg);
+    if(m.status)box.append(element("p","Status: "+m.status));
+    if(m.admin_reply)box.append(element("p","Admin reply: "+m.admin_reply));
+    host.append(box);
+  });
+}
+
 async function refreshAll(){
   message("mainStatus","Refreshing dashboard...");
   await loadDeposits();
   await loadWithdrawals();
   await loadCardApplications();
+  await loadSupportInbox();
   await loadUsers();
   message("mainStatus","Dashboard refreshed.");
 }
@@ -568,38 +597,7 @@ $("creditForm").addEventListener("submit",async e=>{
 
 });
 
-$("testSupportButton").addEventListener("click",async()=>{
-
-  const btn=$("testSupportButton");
-  btn.disabled=true;
-  message("supportTestStatus","Testing support inbox connection...");
-
-  try{
-    const {data,error}=await db.functions.invoke("send-support-message",{
-      body:{action:"admin_list"}
-    });
-
-    if(error){
-      message("supportTestStatus","Test failed: "+error.message,true);
-      return;
-    }
-
-    const count=Array.isArray(data?.messages) ? data.messages.length :
-                Array.isArray(data) ? data.length : null;
-
-    message("supportTestStatus",
-      count===null
-        ? "The function responded: "+JSON.stringify(data)
-        : "Connection successful. Support messages returned: "+count
-    );
-
-  }catch(err){
-    message("supportTestStatus","Test failed: "+(err.message||String(err)),true);
-  }finally{
-    btn.disabled=false;
-  }
-
-});
+$("refreshSupportInbox").addEventListener("click",loadSupportInbox);
 
 async function restoreSession(){
 
