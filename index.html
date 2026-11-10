@@ -370,6 +370,44 @@
         replies.forEach(item => { const reply = document.createElement('p'); reply.textContent = item.reply || ''; supportConversation.appendChild(reply); });
       }
       supportConversation.hidden = false;
+
+      // Reply form is only for the public Contact Support conversation.
+      const replyForm = document.createElement('form');
+      replyForm.style.cssText = 'display:grid;gap:9px;margin-top:14px';
+      const replyLabel = document.createElement('label');
+      replyLabel.textContent = 'Reply to this conversation';
+      const replyInput = document.createElement('textarea');
+      replyInput.rows = 3; replyInput.maxLength = 5000; replyInput.required = true;
+      replyInput.placeholder = 'Type your reply here...';
+      replyInput.style.cssText = 'width:100%;box-sizing:border-box;padding:12px;border:1px solid #dce4ef;border-radius:10px;font:inherit';
+      const replyButton = document.createElement('button');
+      replyButton.type = 'submit'; replyButton.className = 'btn primary'; replyButton.textContent = 'Send reply';
+      const replyStatus = document.createElement('small');
+      replyForm.append(replyLabel, replyInput, replyButton, replyStatus);
+      supportConversation.appendChild(replyForm);
+      replyForm.addEventListener('submit', async replyEvent => {
+        replyEvent.preventDefault();
+        const replyText = replyInput.value.trim();
+        if (!replyText) return;
+        replyButton.disabled = true; replyButton.textContent = 'Sending...';
+        replyStatus.textContent = '';
+        try {
+          const response = await fetch(`${SUPABASE_URL}/functions/v1/send-support-message`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_PUBLISHABLE_KEY },
+            body: JSON.stringify({ action: 'customer_reply', access_code: code, message: replyText })
+          });
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || !result.success) throw new Error(result.error || 'Your reply could not be sent.');
+          replyInput.value = '';
+          replyStatus.textContent = 'Reply sent successfully.';
+          supportLookupForm.requestSubmit();
+        } catch (replyError) {
+          replyStatus.textContent = replyError.message || 'Unable to send your reply.';
+        } finally {
+          replyButton.disabled = false; replyButton.textContent = 'Send reply';
+        }
+      });
     } catch (error) {
       console.error('Support lookup error:', error);
       showNotice(error.message || 'Unable to check your reply. Please try again.');
